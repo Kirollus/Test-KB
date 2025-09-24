@@ -1,5 +1,7 @@
 
 
+
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -9,7 +11,17 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body { height: 100%; font-family: 'Inter', sans-serif; background: #e0f5e9; color: #111; }
+    html, body {
+  height: 100%;
+  font-family: 'Inter', sans-serif;
+  /* --- START: التعديلات هنا --- */
+  background-image: url('back.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed; /* بيخلي الخلفية ثابتة ومبتتحركش مع السكرول */
+  /* --- END: التعديلات هنا --- */
+  color: #111;
+}
 
     .app {
       display: grid;
@@ -21,11 +33,16 @@
     }
 
     .sidebar {
-      background: #fff;
-      border-radius: 12px;
-      padding: 18px;
-      box-shadow: 0 6px 18px rgba(22,27,40,0.06);
-    }
+  /* --- START: التعديلات هنا --- */
+  background: rgba(255, 255, 255, 0.4); /* لون أبيض شفاف بنسبة 40% */
+  backdrop-filter: blur(12px); /* ده السطر المسؤول عن التأثير الضبابي */
+  -webkit-backdrop-filter: blur(12px); /* لدعم متصفح سفاري */
+  border: 1px solid rgba(255, 255, 255, 0.2); /* إطار خفيف عشان يحدد الأطراف */
+  /* --- END: التعديلات هنا --- */
+  border-radius: 12px;
+  padding: 18px;
+  box-shadow: 0 6px 18px rgba(22,27,40,0.06);
+}
 
     .logo { display: flex; align-items: center; gap: 12px; }
     .logo img { width: 48px; height: 48px; border-radius: 8px; }
@@ -91,15 +108,15 @@
     .dropdown.open .dropdown-arrow{transform:rotate(90deg);}
     .dropdown-body h3 { margin: 10px 0 5px; color: #111; }
     .viewer-search-bar {
-  margin-bottom: 15px;
-}
-.viewer-search-bar input {
-  width: 100%;
-  padding: 8px 12px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  font-size: 14px;
-}
+      margin-bottom: 15px;
+    }
+    .viewer-search-bar input {
+      width: 100%;
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
 
     /* --- Visual Enhancements --- */
     .case-header.urgency-medium { border-left-color: #ffc107; }
@@ -240,135 +257,174 @@
         display: inline-block;
     }
   
-/* --- Products Custom Card Styles --- */
-.product-card {
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-  padding: 16px;
-  margin-bottom: 18px;
-  transition: 0.3s;
-}
-.product-card:hover { transform: translateY(-3px); }
-.product-card h3 { font-size: 16px; margin: 0; color: #243244; }
-.product-tag {
-  display: inline-block;
-  background: #007bff;
-  color: #fff;
-  font-size: 12px;
-  font-weight: 600;
-  padding: 4px 10px;
-  border-radius: 12px;
-  margin: 4px 0;
-}
-.product-desc { font-size: 14px; color: #555; margin: 6px 0 14px; }
-.product-card button {
-  width: 100%;
-  background: #800080;
-  color: #fff;
-  border: none;
-  padding: 10px;
-  border-radius: 8px;
-  font-weight: bold;
-  cursor: pointer;
-}
-.product-card button:hover { background: #660066; }
+    /* --- START: Updated Product Card & Modal Styles --- */
 
-/* Modal */
-.modal {
-  display: none; 
-  position: fixed; 
-  z-index: 999; 
-  left: 0; top: 0;
-  width: 100%; height: 100%;
-  background: rgba(0,0,0,0.6);
-  justify-content: center; align-items: center;
-}
-.modal-content {
-  background: #fff;
-  border-radius: 12px;
-  width: 500px;
-  max-width: 95%;
-  overflow: hidden;
-}
-.modal-header {
-  background: #800080;
-  color: #fff;
-  padding: 12px 16px;
-  display: flex; justify-content: space-between; align-items: center;
-}
-.modal-body { padding: 16px; font-size: 14px; color: #333; }
-.modal-body h4 { margin-top: 16px; margin-bottom: 8px; color: #800080; }
-.modal-close { cursor: pointer; font-size: 18px; }
+    /* To make the cards responsive in a grid */
+    .product-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 20px;
+    }
 
+    .product-card {
+      position: relative;
+      background: #fff;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      transition: transform .3s ease, box-shadow .3s ease;
+      padding: 18px;
+      /* margin-bottom is removed to rely on grid gap */
+      display: flex; /* Key for flexbox layout */
+      flex-direction: column; /* Stacks items vertically */
+      justify-content: space-between; /* Pushes button to the bottom */
+      height: 100%; /* Ensures cards in a row have same height */
+    }
+    .product-card:hover { 
+      transform: translateY(-6px); 
+      box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+    }
 
-/* --- Products Card V2 (Icon + Urgency Badge) --- */
-.product-card {
-  position: relative;
-  background: #fff;
-  border-radius: 14px;
-  overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  transition: transform .3s ease, box-shadow .3s ease;
-  padding: 18px;
-  margin-bottom: 20px;
-}
-.product-card:hover { 
-  transform: translateY(-6px); 
-  box-shadow: 0 6px 16px rgba(0,0,0,0.15);
-}
+    .product-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .product-card h3 {
+      font-size: 18px;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #243244;
+    }
+    .product-card h3 .icon {
+      font-size: 20px;
+    }
+    .urgency-badge {
+      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-weight: bold;
+      text-transform: capitalize;
+    }
+    .urgent { background: #ffebee; color: #c62828; }
+    .medium { background: #fff8e1; color: #f57f17; }
+    .normal { background: #e8f5e9; color: #2e7d32; }
 
-.product-card-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 12px;
-}
-.product-card h3 {
-  font-size: 18px;
-  margin: 0;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.product-card h3 .icon {
-  font-size: 20px;
-}
-.urgency-badge {
-  font-size: 12px;
-  padding: 4px 8px;
-  border-radius: 8px;
-  font-weight: bold;
-}
-.urgent { background: #ff4d4d; color: #fff; }
-.medium { background: #ffcc00; color: #333; }
-.normal { background: #28a745; color: #fff; }
+    .product-tag {
+      display: inline-block;
+      background: #e7f3ff;
+      color: #0056b3;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 12px;
+      margin: 4px 0 12px;
+      align-self: flex-start; /* Aligns tag to the start of the flex container */
+    }
 
-.product-tag {
-  display: inline-block;
-  background: #007bff;
-  color: #fff;
-  font-size: 12px;
-  font-weight: 600;
-  padding: 4px 10px;
-  border-radius: 12px;
-  margin: 4px 0 10px;
-}
+    .product-desc { 
+        font-size: 14px; 
+        color: #555; 
+        margin: 0 0 16px; 
+        flex-grow: 1; /* Allows description to take available space */
+    }
 
-.product-desc { font-size: 14px; color: #555; margin: 0 0 14px; }
+    .product-card button {
+      background: #800080;
+      color: #fff;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background .3s ease, transform .2s ease;
+      width: 100%; /* Makes button take full width */
+      margin-top: auto; /* Pushes button to the bottom */
+    }
+    .product-card button:hover { 
+        background: #660066; 
+        transform: scale(1.03);
+    }
 
-.product-card button {
-  background: #800080;
-  color: #fff;
-  border: none;
-  padding: 8px 14px;
-  border-radius: 6px;
-  font-weight: bold;
-  font-size: 13px;
-  cursor: pointer;
-  transition: background .3s ease;
-}
-.product-card button:hover { background: #660066; }
+    /* Modal Styles */
+    .modal {
+      display: none; 
+      position: fixed; 
+      z-index: 999; 
+      left: 0; top: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.6);
+      justify-content: center; align-items: center;
+      opacity: 0;
+      transition: opacity 0.3s ease-in-out;
+    }
+
+    .modal.show {
+        display: flex;
+        opacity: 1;
+    }
+
+    .modal-content {
+      background: #fff;
+      border-radius: 12px;
+      width: 500px;
+      max-width: 95%;
+      overflow: hidden;
+      transform: scale(0.95);
+      transition: transform 0.3s ease-in-out;
+      display: flex; /* Added for flex layout */
+      flex-direction: column; /* Stack header, body, footer vertically */
+      max-height: 90vh; /* Prevent modal from being taller than the screen */
+    }
+    .modal.show .modal-content {
+        transform: scale(1);
+    }
+
+    .modal-header {
+      background: #800080;
+      color: #fff;
+      padding: 14px 18px;
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center;
+      font-size: 18px;
+      font-weight: 600;
+      flex-shrink: 0; /* Prevent header from shrinking */
+    }
+    
+    .modal-body { 
+        padding: 18px; 
+        font-size: 15px; 
+        color: #333; 
+        line-height: 1.6;
+        overflow-y: auto; /* This adds the scrollbar when content is too long */
+        flex-grow: 1; /* Allows body to take available space */
+    }
+
+    .modal-body h4 { 
+        margin-top: 16px; 
+        margin-bottom: 8px; 
+        color: #800080; 
+        border-bottom: 1px solid #eee;
+        padding-bottom: 6px;
+    }
+    .modal-body h4:first-child {
+        margin-top: 0;
+    }
+    .modal-close { 
+        cursor: pointer; 
+        font-size: 24px;
+        font-weight: bold;
+        transition: transform 0.2s ease;
+    }
+    .modal-close:hover {
+        transform: rotate(90deg);
+    }
+    /* --- END: Updated Product Card & Modal Styles --- */
 
 </style>
 </head>
@@ -438,57 +494,395 @@
     const viewerTitle = document.getElementById('viewerTitle');
 
     const demoCases = {
+      products: [
+        {
+         case: "Smashed",
+ 		 type: "Food Quality",
+		urgency: "Damaged",
+        description: " العميل اشتكى ان المنتج مكسور أو مفتت أو مقسوم أو متفعص أو مهروس أومفتوح",
+  		cx: "1. Understand the issue and apologize to the customer with empathy.<br>2. Click on edit to check the order details on Yelo.<br>*Check the previous tickets, In case a ticket was handled over another channel.<br>3. Ask for a photo of the item that has an issue. (It's important to educate the customer that we need the photo for the report, and it will help us in the investigation in addition to picking up the product).<br>4. Offer the designed compensation and apply it through  Switcher by selecting the order, Wallet Refund and Choosing Product issue as a refund reason and Product Damaged.<br>5. If the customer asked for a replacement, kindly inform them that we are currently unable to send replacement orders, However, we can only refund the amount of product/order.<br>6. Report the ticket on freshdesk and add a note in the ticket with full details.",
+  tree: "Ticket Tree: Restaurant, Complaints, Product, Appearance, Smashed<br>Group: CX ( As per your group )<br>Status: Resolved/Closed (USE THIS)",
+  treeCx: "100% refund of the item + Delivery Fees"
+},
+        {
+  case: "Freshness",
+  type: "Food Quality",
+  urgency: "Freshness",
+  description: "- العميل اشتكى ان المنتج قديم.العميل اشتكى ان العيش مفرول.العميل قال ان المنتج بايظ (مازال صالح للأكل) و مذكرش كلمة عفن.",
+  cx: "1. Understand the issue and apologize to the customer with empathy.<br>2. Click on 'edit' to check the order details on Yelo.<br>*Check the previous tickets, In case a ticket was handled over another channel.<br>3. Ask for a photo of the item that has an issue. (It's important to educate the customer that we need the photo for the report, and it will help us in the investigation in addition to picking up the product).<br>4. Offer the designed compensation and apply it through  'Switcher' by selecting the order, 'Wallet Refund' and Choosing 'Product issue' as a refund reason and 'Product Quality'.<br>5. If the customer asked for a replacement, kindly inform them that we are currently unable to send replacement orders, However, we can only refund the amount of product/order.<br>6. Report the ticket on freshdesk and add a note in the ticket with full details.",
+  tree: "Ticket Tree: Restaurant, Complaints, Product, Appearance, Freshness<br>Group: CX ( As per your group )<br>Status: Resolved/Closed (USE THIS)",
+  treeCx: "100% refund of the item + Delivery Fees"
+},
 
-  products: [
-    {
-      case: "Bad Quality Food",
-      type: "Food Quality",
-      urgency: "urgent",
-      description: "Customer complains about undercooked, overcooked, or spoiled food.",
-      cx: "1. Apologize to the customer.<br>2. Request photo evidence.<br>3. Apply compensation policy (refund).",
-      tree: "Products → Bad Quality Food",
-      treeCx: "100% refund + Delivery Fees"
-    },
-    {
-      case: "Wrong Packaging",
-      type: "Packaging Issue",
-      urgency: "medium",
-      description: "Customer received order with messy or wrong packaging.",
-      cx: "1. Apologize to the customer.<br>2. Confirm order details.<br>3. Apply compensation (replacement or refund).",
-      tree: "Products → Wrong Packaging",
-      treeCx: "Replacement OR Refund"
-    }
-  ],
+		{
+  case: "Melted",
+  type: "Food Quality",
+  urgency: "Ice Cream",
+  description: "العميل اشتكى ان المنتج جاي سايح او فك من التجمد",
+  cx: "1. Understand the issue and apologize to the customer with empathy.<br>2. Click on 'edit' to check the order details on Yelo.<br>*Check the previous tickets, In case a ticket was handled over another channel.<br>3. Ask for a photo of the item that has an issue. (It's important to educate the customer that we need the photo for the report, and it will help us in the investigation in addition to picking up the product).<br>4. Offer the designed compensation and apply it through  'Switcher' by selecting the order, 'Wallet Refund' and Choosing 'Product issue' as a refund reason and 'Product Quality'.<br>5. If the customer asked for a replacement, kindly inform them that we are currently unable to send replacement orders, However, we can only refund the amount of product/order.<br>6. Report the ticket on freshdesk and add a note in the ticket with full details.",
+  tree: "Ticket Tree: Restaurant, Complaints, Product, Appearance, Melted<br>Group: CX ( As per your group )<br>Status: Resolved/Closed (USE THIS)",
+  treeCx: "100% refund of the item + Delivery Fees"
+},
 
-  chat: [
-  {
-    case: "Late Order Complaint",
-    type: "Delay",
-    urgency: "medium",
-    description: "Customer reports that the order is late beyond the ETA.",
-    cx: "1. Apologize to the customer.<br>2. Check DA status in Yelo.<br>3. Provide an ETA and offer compensation if delay is confirmed.",
-    tree: "Customer Requests → Late Order",
-    treeCx: "Customer informed + compensation applied"
-  },
-  {
-    case: "Wrong Item Delivered",
-    type: "Order Issue",
-    urgency: "urgent",
-    description: "Customer received a wrong dish or missing items.",
-    cx: "1. Apologize and confirm order ID.<br>2. Create a ticket.<br>3. Offer replacement or refund.<br>4. Escalate to restaurant if needed.",
-    tree: "Customer Requests → Wrong Item",
-    treeCx: "Replacement or Refund processed"
-  },
-  {
-    case: "Request for Refund",
-    type: "Compensation",
-    urgency: "medium",
-    description: "Customer is requesting a refund for dissatisfaction.",
-    cx: "1. Validate order details.<br>2. Confirm issue type.<br>3. Apply refund policy.<br>4. Document in ticket.",
-    tree: "Customer Requests → Refund",
-    treeCx: "Refund processed"
-  }
-],
+		{
+  case: "Size",
+  type: "Food Quality",
+  urgency: "Size",
+  description: "العميل اشتكى ان حجم المنتج غير مطابق للصورة أو المعلومات على الأبليكيشن",
+  cx: "1. Understand the issue and apologize to the customer with empathy.<br>2. Click on 'edit' to check the order details on Yelo.<br>*Check the previous tickets, In case a ticket was handled over another channel.<br>3. Ask for a photo of the item that has an issue. (It's important to educate the customer that we need the photo for the report, and it will help us in the investigation in addition to picking up the product).<br>4. Offer the designed compensation and apply it through  'Switcher' by selecting the order, 'Wallet Refund' and Choosing 'Product issue' as a refund reason and 'Product Quality'.<br>5. Important note: If a customer complains about the size of a product (it seems smaller than the previous time), we should inform the customer that while the size may vary (the product's appearance), the weight should remain consistent on the app, as each product has a specific weight.<br>6. If this is the customer's first order and they complain about the size, educate them about the dimensions, then fulfill the tree with a Feedback not complaint.<br>7. If the customer asked for a replacement, kindly inform them that we are currently unable to send replacement orders, However, we can only refund the amount of product/order.",
+  tree: "Ticket Tree: Restaurant, Complaints, Product, Appearance, Size<br>Group: CX ( As per your group )<br>Status: Resolved/Closed (USE THIS)",
+  treeCx: "50% Refund of the item + Delivery Fees"
+},
+{
+  case: "Burned",
+  type: "Food Quality",
+  urgency: "Burned",
+  description: "العميل اشتكى ان المنتج ملسوع، محروق، فيه سواد، هباب",
+  cx: "1. Understand the issue and apologize to the customer with empathy.<br>2. Click on 'edit' to check the order details on Yelo.<br>*Check the previous tickets, In case a ticket was handled over another channel.<br>3. Ask for a photo of the item that has an issue. (It's important to educate the customer that we need the photo for the report, and it will help us in the investigation in addition to picking up the product).<br>4. Offer the designed compensation and apply it through  'Switcher' by selecting the order, 'Wallet Refund' and Choosing 'Product issue' as a refund reason and 'Product Quality'.<br>5. If the customer asked for a replacement, kindly inform them that we are currently unable to send replacement orders, However, we can only refund the amount of product/order.<br>6. Report the ticket on freshdesk and add a note in the ticket with full details.",
+  tree: "Ticket Tree: Restaurant, Complaints, Product, Appearance, Burned<br>Group: CX ( As per your group )<br>Status: Resolved/Closed (USE THIS)",
+  treeCx: "100% refund of the item + Delivery Fees"
+},
+
+		{
+  case: "Topping",
+  type: "Food Quality",
+  urgency: "Topping",
+  description: "العميل اشتكى ان الطبقة العلوية مفصولة من المنتج داخل العبوة او لازقة في العلبة",
+  cx: "1. Understand the issue and apologize to the customer with empathy.<br>2. Click on 'edit' to check the order details on Yelo.<br>*Check the previous tickets, In case a ticket was handled over another channel.<br>3. Ask for a photo of the item that has an issue. (It's important to educate the customer that we need the photo for the report, and it will help us in the investigation in addition to picking up the product).<br>4. Offer the designed compensation and apply it through  'Switcher' by selecting the order, 'Wallet Refund' and Choosing 'Product issue' as a refund reason and 'Product Quality'.<br>5. If the customer asked for a replacement, kindly inform them that we are currently unable to send replacement orders, However, we can only refund the amount of product/order.<br>6. Report the ticket on freshdesk and add a note in the ticket with full details.",
+  tree: "Ticket Tree: Restaurant, Complaints, Product, Appearance, Topping<br>Group: CX ( As per your group )<br>Status: Resolved/Closed (USE THIS)",
+  treeCx: "100% refund of the item + Delivery Fees"
+},
+
+		{
+  case: "Filling",
+  type: "Food Quality",
+  urgency: "Filling",
+  description: "العميل اشتكى ان العبوة غير مملوءة بالكامل(فى حالة ان العبوة مغلقة).العميل اشتكى ان حشو المنتجات ناقص او قليل.العميل اشتكى ان مكون من مكونات السلطة او الساندوتش كان قليل. (Breadfast Kitchen & Breadfast Coffee) فقط",
+  cx: "1. Understand the issue and apologize to the customer with empathy.<br>2. Click on 'edit' to check the order details on Yelo.<br>*Check the previous tickets, In case a ticket was handled over another channel.<br>3. Ask for a photo of the item that has an issue. (It's important to educate the customer that we need the photo for the report, and it will help us in the investigation in addition to picking up the product).<br>4. Offer the designed compensation and apply it through  'Switcher' by selecting the order, 'Wallet Refund' and Choosing 'Product issue' as a refund reason and 'Product Quality'.<br>5. If the customer asked for a replacement, kindly inform them that we are currently unable to send replacement orders, However, we can only refund the amount of product/order.<br>6. Report the ticket on freshdesk and add a note in the ticket with full details.",
+  tree: "Ticket Tree: Restaurant, Complaints, Product, Appearance, Filling<br>Group: CX ( As per your group )<br>Status: Resolved/Closed (USE THIS)",
+  treeCx: "Relative to the restaurant filling standards"
+},
+
+		{
+  case: "Rotten",
+  type: "Food Quality",
+  urgency: "Quality",
+  description: "- العميل اشتكى من وجود عفن في المنتج (على حسب كلام العميل).وجود عفن ظاهري علي الطعام",
+  cx: "1. Understand the issue and apologize to the customer with empathy.<br>2. Click on 'edit' to check the order details on Yelo.<br>*Check the previous tickets, In case a ticket was handled over another channel.<br>3. Ask for a photo of the item that has an issue. (It's important to educate the customer that we need the photo for the report, and it will help us in the investigation in addition to picking up the product).<br>4. Offer the designed compensation and apply it through  'Switcher' by selecting the order, 'Wallet Refund' and Choosing 'Product issue' as a refund reason and 'Product Quality'.<br>5. If the customer asked for a replacement, kindly inform them that we are currently unable to send replacement orders, However, we can only refund the amount of product/order.<br>6. Report the ticket on freshdesk and add a note in the ticket with full details.<br>7. If we need to conduct an investigation,a pickup order can be created only for 'Breadfast Kitchen & Breadfast Coffee' products using the admin panel.",
+  tree: "Ticket Tree: Restaurant, Complaints, Product, Appearance, Rotten<br>Group: CX ( As per your group )<br>Status: Resolved/Closed (USE THIS)",
+  treeCx: "100% refund of the item + Delivery Fees"
+},
+
+		{
+  case: "Hot / Cold",
+  type: "Food Quality",
+  urgency: "Temperature",
+  description: "العميل اشتكى ان المنتج ساقع او سخن و ده عكس طبيعه المنتج.",
+  cx: "1. Understand the issue and apologize to the customer with empathy.<br>2. Click on 'edit' to check the order details on Yelo.<br>3.Check the previous tickets, In case a ticket was handled over another channel.<br>4. Offer the designed compensation and apply it through  'Switcher' by selecting the order, 'Wallet Refund' and Choosing 'Product issue' as a refund reason and 'Product Quality'.<br>5. If the customer asked for a replacement, kindly inform them that we are currently unable to send replacement orders, However, we can only refund the amount of product/order.<br>6. Report the ticket on freshdesk and add a note in the ticket with full details.",
+  tree: "Ticket Tree: Restaurant, Complaints, Product, Hot / Cold<br>Group: CX ( As per your group )<br>Status: Resolved/Closed (USE THIS)",
+  treeCx: "Replacement order for item if the customer accepted OR 100% refund of the item + Delivery Fees"
+},
+
+		{
+  case: "Under/Overcooked",
+  type: "Food Quality",
+  urgency: "Under/Overcooked",
+  description: "العميل اشتكى من الدجاج الموجود في أي ساندويتش أو سلطة انه مش مستوي او مستوي زيادة عن اللزوم وذكر أن الدجاج كان ناشف Dry",
+  cx: "1. Understand the issue and apologize to the customer with empathy.<br>2. Click on 'edit' to check the order details on Yelo.<br>*Check the previous tickets, In case a ticket was handled over another channel.<br>3. Ask for a photo of the item that has an issue. (It's important to educate the customer that we need the photo for the report, and it will help us in the investigation in addition to picking up the product).<br>4. Offer the designed compensation and apply it through  'Switcher' by selecting the order, 'Wallet Refund' and Choosing 'Product issue' as a refund reason and 'Product Quality'.<br>5. If the customer asked for a replacement, kindly inform them that we are currently unable to send replacement orders, However, we can only refund the amount of product/order.<br>6. Report the ticket on freshdesk and add a note in the ticket with full details.<br>7. If we need to conduct an investigation,a pickup order can be created only for 'Breadfast Kitchen & Breadfast Coffee' in the undercooked complaints using the admin panel",
+  tree: "Ticket Tree: Restaurant, Complaints, Product, Appearance, Under/Overcooked<br>Group: CX ( As per your group )<br>Status: Resolved/Closed (USE THIS)",
+  treeCx: "100% refund of the item + Delivery Fees"
+},
+
+		{
+  case: "Bad Smell",
+  type: "Food Quality",
+  urgency: "Smell",
+  description: "- العميل اشتكى من وجود رائحة سيئة في المنتج غير مقبولة مثل تعفن ولكن لم يوجد عفن ظاهري.",
+  cx: "1. Understand the issue and apologize to the customer with empathy.<br>2. Click on 'edit' to check the order details on Yelo.<br>*Check the previous tickets, In case a ticket was handled over another channel.<br>3. Ask for a photo of the item that has an issue. (in case there is an appearance issue related). will be an appearance complaint<br>4. Offer the designed compensation and apply it through  'Switcher' by selecting the order, 'Wallet Refund' and Choosing 'Product issue' as a refund reason and 'Product Quality'.<br>5. If the customer asked for a replacement, kindly inform them that we are currently unable to send replacement orders, However, we can only refund the amount of product/order.<br>6. Report the ticket on freshdesk and add a note in the ticket with full details.<br>7. If we need to conduct an investigation,a pickup order can be created only for 'Breadfast Kitchen & Breadfast Coffee' in the undercooked complaints using the admin panel<br>8. In case of the complaints related to A restaurant, create an internal request ticket - Restaurant Investigation call, assign it to the OB team, to notify the restaurant with the case.",
+  tree: "Ticket Tree: Restaurant, Complaints, Product, Smell, Bad Smell<br>Group: CX ( As per your group )<br>Status: Resolved/Closed (USE THIS)",
+  treeCx: "100% refund of the item + Delivery Fees"
+},
+
+		{
+  case: "Spoiled Taste",
+  type: "Food Quality",
+  urgency: "Taste",
+  description: "العميل اشتكى ان طعم المنتج حمضان، مزز أو بايظ. العميل اشتكي ان العصير اللي موجود في الاوفر جاي العلبة منفوخه و بايظ",
+  cx: "1. Understand the issue and apologize to the customer with empathy.<br>2. Click on 'edit' to check the order details on Yelo.<br>*Check the previous tickets, In case a ticket was handled over another channel.<br>3. Ask for a photo of the item that has an issue. (in case there is an appearance issue related). will be an appearance complaint<br>4. Offer the designed compensation and apply it through  'Switcher' by selecting the order, 'Wallet Refund' and Choosing 'Product issue' as a refund reason and 'Product Quality'.<br>5. If the customer asked for a replacement, kindly inform them that we are currently unable to send replacement orders, However, we can only refund the amount of product/order.<br>6. Report the ticket on freshdesk and add a note in the ticket with full details.<br>7. If we need to conduct an investigation,a pickup order can be created only for 'Breadfast Kitchen & Breadfast Coffee' in the undercooked complaints using the admin panel<br>8. Create an itenrnal request ticket > Restaurant Investigation call, assign it to the OB team, to notify the restaurant with the case.",
+  tree: "Ticket Tree: Restaurant, Complaints, Product, Taste, Spoiled Taste<br>Group: CX ( As per your group )<br>Status: Resolved/Closed (USE THIS)",
+  treeCx: "100% refund of the item + Delivery Fees"
+},
+
+		{
+  case: "Ingredients Quality",
+  type: "Food Quality",
+  urgency: "Quality",
+  description: " العميل اشتكى ان جودة مكونات المنتج رديئة. (مثال: الشيكولاته المستخدمه فى المنتج كانها نوع رخيص) - العميل اشتكي ان جودة الاستريبس او الدجاج رديئه ",
+  cx: "1. Understand the issue and apologize to the customer with empathy.<br>2. Click on 'edit' to check the order details on Yelo.<br>*Check the previous tickets, In case a ticket was handled over another channel.<br>3. Ask for a photo of the item that has an issue. (It's important to educate the customer that we need the photo for the report, and it will help us in the investigation in addition to picking up the product).<br>4. Offer the designed compensation and apply it through  'Switcher' by selecting the order, 'Wallet Refund' and Choosing 'Product issue' as a refund reason and 'Product Quality'.<br>5. If the customer asked for a replacement, kindly inform them that we are currently unable to send replacement orders, However, we can only refund the amount of product/order.<br>6. Report the ticket on freshdesk and add a note in the ticket with full details.<br>7. This type of case applies only to 'Breadfast Kitchen & Breadfast Coffee'.",
+  tree: "Ticket Tree: Restaurant, Complaints, Product, Ingredients Quality<br>Group: CX ( As per your group )<br>Status: Resolved/Closed (USE THIS)",
+  treeCx: "No refund"
+},
+
+		{
+  case: "Foreign objects",
+  type: "Food Quality",
+  urgency: "Foreign objects",
+  description: "العميل اشتكى من وجود أجسام غريبة عن مكونات المنتج. (مثل فتلة، ورقة، بلاسيتك مرن أو صلب، معدن، سلكة، خشب، تراب، قشرة، بذرة) او أي نوع ملوث للمنتج (داخل المنتج) ",
+  cx: "1. Understand the issue and apologize to the customer with empathy & assure the customer with our hygiene and safety measurments.<br>2. Click on 'edit' to check the order details on Yelo.<br>*Check the previous tickets, In case a ticket was handled over another channel.<br>3. Ask for a photo of the item that has an issue. (It's important to educate the customer that we need the photo for the report, and it will help us in the investigation in addition to picking up the product).<br>4. Offer the designed compensation and apply it through  'Switcher' by selecting the order, 'Wallet Refund' and Choosing 'Product issue' as a refund reason and 'Product Quality'.<br>5. If the customer asked for a replacement, kindly inform them that we are currently unable to send replacement orders, However, we can only refund the amount of product/order.<br>6. Report the ticket on freshdesk and add a note in the ticket with full details.<br>7. This type of case applies only to 'Breadfast Kitchen & Breadfast Coffee'.",
+  tree: "Ticket Tree: Restaurant, Complaints, Product, Appearance, Foreign objects<br>Group: CX ( As per your group )<br>Status: Resolved/Closed (USE THIS)",
+  treeCx: "Full Refund + 300 EGP (fixed value) for inconvenience."
+},
+
+			{
+  case: "Insects",
+  type: "Food Quality",
+  urgency: "Insects",
+  description: " العميل اشتكى من وجود حشرات أو دود أو سوس في المنتج او على غلاف المنتج. (ايا كان نوع الحشرة) ",
+  cx: "1. Understand the issue and apologize to the customer with empathy & assure the customer with our hygiene and safety measurments.<br>2. Click on 'edit' to check the order details on Yelo.<br>*Check the previous tickets, In case a ticket was handled over another channel.<br>3. Ask the customer for a suitable time to pick the product with the insect. (It's important to educate the customer that we need the photo for the report, and it will help us in the investigation in addition to picking up the product).<br>4. Ask for a photo of the item that has an issue. (It's important to educate the customer that we need the photo for the report, and it will help us in the investigation in addition to picking up the product).<br>5. If the customer asked for a replacement, kindly inform them that we are currently unable to send replacement orders, However, we can only refund the amount of product/order.<br>6.Offer the designed compensation and apply it through  'Switcher' by selecting the order, 'Wallet Refund' and Choosing 'Product issue' as a refund reason and 'Product Quality'.<br>7. If we need to conduct an investigation,a pickup order can be created only for 'Breadfast Kitchen & Breadfast Coffee' products using the admin panel.<br>",
+  tree: "Ticket Tree: Restaurant, Complaints, Product, Appearance, Insects<br>Group: CX ( As per your group )<br>Status: Resolved/Closed (USE THIS)",
+  treeCx: "Full Refund + 300 EGP (fixed value) for inconvenience."
+},
+
+		{
+  case: "Poisoning",
+  type: "Food Quality",
+  urgency: "Poisoning",
+  description: " نستخدمها فى حالة ان العميل تعب و راح المستشفى* العميل أصيب بنزلة معوية، قئ، مرض شديد و اجاب على ال 6 اسئلة ",
+  cx: "1. Understand the issue, apologize sincerely with empathy, and ensure the customer’s well-being by asking about their health and condition.<br>2. Click on 'edit' to check the order details on Yelo.<br>*Check the previous tickets, In case a ticket was handled over another channel.<br>3. Create a retention ticket and change the group to 'CX-Retention',  and make the status 'Open'<br>4. Inform the customer that one of our team will contact him/her, as soon as possible within the day.<br>5. The retention agent should apologize once more and kindly request a photo of the item that has an issue and medical report. (It's important to educate the customer that we need the photo for the report, and it will help us in the investigation in addition to picking up the product).<br><br>6. Ask the customer the following questions:<br>1- what symptoms appeared.<br>2- Time between symptoms appearing and eating.<br>3- The number of people who ate compared to the people who showed symptoms<br>4- Age of the affected consumer (children - youth - the elderly).<br>5- Any alergin for the consumer to the item consumed.<br>6- Was any food consumed by the customer before it?<br><br>7. Offer the designed compensation and apply it through  'Switcher' by selecting the order, 'Wallet Refund' and Choosing 'Product issue' as a refund reason and 'Product Quality'.",
+  tree: "Ticket Tree: Restaurant, Complaints, Product, Food Safety, Poisoning<br>Group: CX ( As per your group )<br>Status: Resolved/Closed (USE THIS)",
+  treeCx: "Full Refund + Medical expenses<br>(Medical proof - Request photo evidence when possible)"
+},
+      ],
+      delivery: [
+        {
+  case: "Coffee Delivery Spilled",
+  type: "Delivery Issue",
+  urgency: "Coffee",
+  description: "القهوة وصلت للعميل مسكوب",
+  cx: "1. Understand the issue and apologize to the customer with empathy.<br>2. Click on 'edit' to check the order details on Yelo.<br>3. Check the previous tickets, In case a ticket was created for the concerned order.<br>4. Check the order details.<br>5. Ask for a photo of the item that has an issue. <br>6. Report the ticket on freshdesk",
+  tree: "Complaints → Delivery → Coffee Delivery Spilled<br>Group: CX ( AS per your group )<Br>Status: Resolved/Closed (USE THIS)",
+  treeCx: "100% refund of the item + Delivery Fees"
+},
+        
+        {
+  case: "Wrong Collection",
+  type: "Delivery Issue",
+  urgency: "Amount",
+  description: "- العميل اشتكى ان الدليفري حصل مبلغ خطا. - الدليفري قفل الاوردر بدون تحصيل اى مبلغ (دون موافقة من فريق الOutbound). - الدليفري حصل فلوس من العميل و الاوردر كان مدفوع اونلاين.",
+  cx: "1. Understand the issue and apologize to the customer with empathy.<br>2. Click on 'edit' to check the order details on Yelo.<br>3. Check: <br>-Customer's complaints history<br>-Customer's balance.<br>-Order's amount and the collected amount shown on switcher<br>-In case of the paid amount is unrealistic or a suspecious customer, refer back to the senior.<br>4. Report the ticket on freshdesk<br>5. Take the action:<br>- If the DA collects an amount lower than what the customer paid, refund the rest of amount from switcher.<br>- If the DA collects more than the amount paid by the customer, deduct the rest from the customer's wallet (switcher)",
+  tree: "Complaints → Delivery → Wrong Collection<br>Group: CX ( AS per your group )<Br>Status: Resolved/Closed (USE THIS)",
+  treeCx: "Refund the customer with the rest of the amount"
+},
+
+		{
+  case: "No change",
+  type: "Delivery Issue",
+  urgency: "No change",
+  description: "-العميل اشتكى أن المندوب بلغ بأن ليس معه باقي للمبلغ المدفوع",
+  cx: "1. Understand the issue and apologize to the customer with empathy.<br>2. Click on 'edit' to check the order details on Yelo.<br>3. Check the order details and tickets <br>4. Report the ticket on freshdesk<br>5. Inform the customer that a formal investigation will take place, to prevent this from happening again.",
+  tree: "Complaints → Delivery → No Change<br>Group: CX ( AS per your group )<Br>Status: Resolved/Closed (USE THIS)",
+  treeCx: "No Compenstion"
+},
+
+		{
+  case: "Dress code, Smoking",
+  type: "Delivery Issue",
+  urgency: "Dress code",
+  description: "- النظافة الشخصية للمندوب غير مقبولة. - شكوى من العميل من تصرف منافي للنظافة الشخصية من المندوب.",
+  cx: "1. Understand the issue and apologize to the customer with empathy.<br>2. Click on 'edit' to check the order details on Yelo.<br>3. Check the order details and tickets <br>3. Report the ticket on freshdesk<br>4. Inform the customer that a formal investigation will take place, to prevent this from happening again.",
+  tree: "Complaints → Delivery → Personal Appearance → Dress code, Smoking<br>Group: CX ( AS per your group )<Br>Status: Resolved/Closed (USE THIS)",
+  treeCx: "No Compenstion"
+},
+
+		{
+  case: "Hygiene",
+  type: "Delivery Issue",
+  urgency: "Hygiene",
+  description: "النظافة الشخصية للمندوب غير مقبولة. - شكوى من العميل من تصرف منافي للنظافة الشخصية من المندوب.",
+  cx: "1. Understand the issue and apologize to the customer with empathy.<br>2. Click on 'edit' to check the order details on Yelo.<br>3. Check the order details and tickets <br>4. Check the customer's balance log, make sure that the change was added to the wallet and inform the cst that it is added to the wallet.<br>5. Report the ticket on freshdesk<br>6. Inform the customer that a formal investigation will take place, to prevent this from happening again.",
+  tree: "Complaints → Delivery → Personal Appearance → Hygiene<br>Group: CX ( AS per your group )<Br>Status: Resolved/Closed (USE THIS)",
+  treeCx: "No Compenstion"
+},
+
+		{
+  case: "Inappropriate attitude",
+  type: "Delivery Issue",
+  urgency: "Attitude",
+  description: "- تعامل مندوب التوصيل مع العميل غير لائق أو غير محترم. - الدليفري رفض ياخد كوينز من العميل. - العميل اشتكى أن المندوب رن الجرس أو خبط على الباب كتير فى وقت قليل بشكل مزعج.",
+  cx: "1. Understand the issue and apologize to the customer with empathy.<br>2. Click on 'edit' to check the order details on Yelo.<br>3. Check the order details and ask the customer for more information about the incident<br>4. Report the ticket on freshdesk<br>5. Take the action:<br>-Inform the customer that a formal investigation will take place, to prevent this from happening again.<br>-Send an email with the incident details (in case of severe and urgent cases) , and follow up (if needed).<br>-Compensate the customer with the designed compensation.<br>-Check the customer's balance log, make sure that the change was added to the wallet and inform the cst that it is added to the wallet.",
+  tree: "Complaints → Delivery → Personal behavior → Inappropirate attitude<br>Group: CX ( AS per your group )<Br>Status: Resolved/Closed (USE THIS)",
+  treeCx: "50% of the order amount"
+},
+
+		{
+  case: "Unnecessarily contacting customer",
+  type: "Delivery Issue",
+  urgency: "Unnecessarily contacting",
+  description: " مندوب التوصيل يحاول التواصل مع العميل بدون داعي.",
+  cx: "1. Understand the issue and apologize to the customer with empathy.<br>2. Click on 'edit' to check the order details on Yelo.<br>3. Check the order details and tickets.<br>4. Ask for details about the incident<br>5. Report the ticket on freshdesk.<br>6. Inform the customer that a formal investigation will take place, to prevent this from happening again.",
+  tree: "Complaints → Delivery → Personal behavior → Unnecessarily contacting customer<br>Group: CX ( AS per your group )<Br>Status: Resolved/Closed (USE THIS)",
+  treeCx: "50% of the order amount"
+},
+
+		{
+  case: "Wrong Order",
+  type: "Delivery Issue",
+  urgency: "Wrong Order",
+  description: "- الريسيت مش بتاع العميل و الدليفري وصل الاوردر لعنوان غلط (وهوا طالب اوردر و مجالوش الاوردر الخاص به) - العميل استلم اوردر زيادة مع الاوردر بتاعه (الاوردر عليه رقم مختلف) ",
+  cx: "1. Understand the issue and apologize to the customer with empathy.<br>2. Click on 'edit' to check the order details on Yelo.<br>3. Check the order details and tickets<br>4. Ask for a photo of wrong order's number.<br>5. Report the ticket on freshdesk.<br>6. Check the customer's balance log, make sure that the change was added to the wallet and inform the cst that it is added to the wallet.<br>7.Take the action:<br>-In case the DA came back with the right order, we should create a ticket anyways mentioning all of the details.<br>-If a customer complains about receiving the wrong order, we should apologize and compensate the customer with the designed compensation.",
+  tree: "Complaints → Delivery → Wrong Order<br>Group: CX ( AS per your group )<Br>Status: Resolved/Closed (USE THIS)",
+  treeCx: "100% refund of the item + Delivery Fees"
+},
+
+		{
+  case: "Order marked as delivered & cust. didn't receive it",
+  type: "Order Issue",
+  urgency: "Attitude",
+  description: "- الاوردر وصل لعنوان غلط (هنا الى بيشتكى هو العميل الى عامل الاوردر و مجالوش). - الاوردر اتقفل و العميل لسه ماستلمش (المندوب قفل الاوردر قبل ما يوصل للعميل)",
+  cx: "1.Understand the issue and apologize to the customer with empathy.<br>2. Click on 'edit' to check the order details on Yelo.<br>3.Check the order details and tickets.<br>4.Report the ticket on freshdesk.<br>5.Follow up with the DA and contact the customer to provide an update on the order.<br>6.Create a ticket to the live ops team.",
+  tree: "Complaints → Delivery → Order details → Order marked as delivered & cust. didn't receive it<br>Group: CX ( AS per your group )<Br>Status: Resolved/Closed (USE THIS)",
+  treeCx: "Refund the delivery fees"
+},
+
+		{
+  case: "Not following delivery instructions",
+  type: "Delivery Issue",
+  urgency: "instructions",
+  description: "- المندوب لم يتبع تعليمات التوصيل المطلوبة من العميل (التعليمات لازم تكون مكتوبه فى الاوردر)",
+  cx: "1. Understand the issue and apologize to the customer with empathy.<br>2. Click on 'edit' to check the order details on Yelo.<br>3. Check the order details and tickets <br>4. Ask for details about the incident<br>5. Report the ticket on freshdesk.<br>6. Inform the customer that a formal investigation will take place, to prevent this from happening again.",
+  tree: "Complaints → Delivery → Order details → Not following delivery instructions<br>Group: CX ( AS per your group )<Br>Status: Resolved/Closed (USE THIS)",
+  treeCx: "After handling the customer if the customer showed any type of frustration add DF to the wallet via wallet refund ticket "
+},
+
+		{
+  case: "Theft",
+  type: "Delivery Issue",
+  urgency: "Theft",
+  description: "العميل وضح ان المندوب سرقه ",
+  cx: "1. Understand the issue and apologize to the customer with empathy.<br>2. Click on 'edit' to check the order details on Yelo.<br>3. Check the order details and ask the customer for more information about the incident.<br>4. Ask for a photo or video from the DA if they send anything to the customer or regarding the incident* Report the ticket on freshdesk<br>5. Create a retention ticket and change the group to 'CX-Retention',  and make the status 'Open'<br>6. Inform the customer that one of our team will contact him/her, as soon as possible within the day.<br><br>7. Take the action:<br>-Inform the customer that a formal investigation will take place, to prevent this from happening again.<br>-Send an email with the incident details (in case of severe and urgent cases) , and follow up (if needed).<br>-Compensate the customer with the designed compensation.",
+  tree: "Complaints → Delivery → Order details → Theft<br>Group: CX ( AS per your group )<Br>Status: Resolved/Closed (USE THIS)",
+  treeCx: "Refund 100% + urgent escalation + follow up"
+},
+
+		{
+  case: "Harassment",
+  type: "Delivery Issue",
+  urgency: "Harassment",
+  description: "العميل وضح ان المندوب بعت لها رسايل علي واتساب او تحرش بيها سواء تحرش لفظي او Physical",
+  cx: "1. Understand the issue and apologize to the customer with empathy.<br>2. Click on 'edit' to check the order details on Yelo.<br>3. Check the order details and ask the customer for more information about the incident.<br>4. Ask for a photo or video from the DA if they send anything to the customer or regarding the incident. (It's important to educate the customer that we need the photo for the report, and it will help us in the investigation in addition to picking up the product).<br>5. Report the ticket on freshdesk<br>6. Take the action:<br><br>-Inform the customer that a formal investigation will take place, to prevent this from happening again.<br>-Send an email with the incident details (in case of severe and urgent cases) , and follow up (if needed).<br>-Compensate the customer with the designed compensation.",
+  tree: "Complaints → Delivery → Order details → Harassment<br>Group: CX ( AS per your group )<Br>Status: Resolved/Closed (USE THIS)",
+  treeCx: "Refund 100% + urgent escalation + follow up"
+},
+
+		{
+  case: "DA didn't call me",
+  type: "Delivery Issue",
+  urgency: "DA didn't call me",
+  description: "العميل وضح ان الديليفري لم يتصل به و عمل ريبورت ان الديليفري كلم العميل و مش بيرد",
+  cx: "1. Understand the issue and apologize to the customer with empathy.<br>2. Click on 'edit' to check the order details on Yelo.<br>3. Check the order details and tickets <br>4. Ask for details about the incident<br>5. Report the ticket on freshdesk.<br>6. Follow up with the DA and call the customer to provide an update on the order.<br>7. Inform the customer that a formal investigation will take place, to prevent this from happening again.",
+  tree: "Complaints → Delivery → Order details → DA didn't call me<br>Group: CX ( AS per your group )<Br>Status: Resolved/Closed (USE THIS)",
+  treeCx: "Refund delivery fees"
+},
+
+		{
+  case: "Refused to come to door / asked customer to meet outside",
+  type: "Delivery Issue",
+  urgency: "Refused",
+  description: "العميل وضح ان الديليفري طلب منه انه ينزل يستلم الاوردر من تحت العمارة و رفض يطلعهوله لحد باب الشقه ",
+  cx: "1. Understand the issue and apologize to the customer with empathy.<br>2. Click on 'edit' to check the order details on Yelo.<br>3. Check the order details and tickets <br>4. Ask for details about the incident<br>5. Report the ticket on freshdesk.<br>6. Inform the customer that a formal investigation will take place, to prevent this from happening again.",
+  tree: "Complaints → Delivery → Refused to come to door / asked customer to meet outside<br>Group: CX ( AS per your group )<Br>Status: Resolved/Closed (USE THIS)",
+  treeCx: "Refund delivery fees"
+},
+
+		{
+  case: "Moving to wrong direction",
+  type: "Delivery Issue",
+  urgency: "Wrong direction",
+  description: "العميل اشتكي ان المندوب بيتحرك عكس اتجاه عنوانه علي الخريطه ",
+  cx: "1. Understand the issue and apologize to the customer with empathy.<br>2. Click on 'edit' to check the order details on Yelo.<br>3. Check the order details and tickets <br>4. Ask for details about the incident<br>5. Report the ticket on freshdesk.<br>6. Check the DA's tracker to determine if they are heading to the restaurant (pickup point) or the customer (delivery point).<br>7. Contact the customer and confirm the ETA time for the order.",
+  tree: "Complaints → Delivery → Moving to wrong direction<br>Group: CX ( AS per your group )<Br>Status: Resolved/Closed (USE THIS)",
+  treeCx: "Refund delivery fees"
+},
+
+		{
+  case: "Delivery is not moving on the app",
+  type: "Delivery Issue",
+  urgency: "Not moving on",
+  description: "الديليفري واقف مكانه مش بيتحرك علي الخريطه  ",
+  cx: "1. Understand the issue and apologize to the customer with empathy.<br>2. Click on 'edit' to check the order details on Yelo.<br>3. Check the order details and tickets <br>4. Ask for details about the incident<br>5. Report the ticket on freshdesk.<br>6. Follow up with the DA and call the customer to provide an update on the order.<br>7. Inform the customer that a formal investigation will take place, to prevent this from happening again.<br>8. Check the DA's tracker to determine if they are heading to the restaurant (pickup point) or the customer (delivery point).<br>9. Contact the customer and confirm the ETA time for the order.",
+  tree: "Complaints → Delivery → Delivery is not moving on the app<br>Group: CX ( AS per your group )<Br>Status: Resolved/Closed (USE THIS)",
+  treeCx: "Refund delivery fees"
+},
+      ],
+      packaging: [
+        {
+          case: "Spilled Items",
+          type: "Container Integrity",
+          urgency: "urgent",
+          description: "Food or drinks spilled inside the bag due to poor packaging or handling.",
+          cx: "1. Apologize for the mess.<br>2. Request a photo of the spilled items.<br>3. Refund the affected items.",
+          tree: "Packaging → Spilled Items",
+          treeCx: "100% refund for damaged items."
+        },
+        {
+          case: "Damaged Packaging",
+          type: "Physical Damage",
+          urgency: "medium",
+          description: "The outer bag or container was torn, crushed, or damaged upon arrival.",
+          cx: "1. Apologize to the customer.<br>2. Confirm if the food quality was affected.<br>3. Offer partial compensation for the inconvenience.",
+          tree: "Packaging → Damaged Packaging",
+          treeCx: "Partial compensation (e.g., 25% of order)."
+        }
+      ],
+      coffee: [
+        {
+          case: "Wrong Coffee Temperature",
+          type: "Quality Issue",
+          urgency: "medium",
+          description: "The coffee arrived cold when it was supposed to be hot.",
+          cx: "1. Apologize for the experience.<br>2. Offer a replacement or a full refund for the coffee.",
+          tree: "Coffee → Wrong Temperature",
+          treeCx: "Replacement or 100% refund for the item."
+        },
+        {
+          case: "Incorrect Coffee Order",
+          type: "Order Accuracy",
+          urgency: "urgent",
+          description: "Customer received the wrong type of coffee (e.g., latte instead of cappuccino).",
+          cx: "1. Apologize and confirm the original order.<br>2. Immediately arrange for a replacement or offer a refund.",
+          tree: "Coffee → Incorrect Order",
+          treeCx: "Replacement or 100% refund for the item."
+        }
+      ],
+      chat: [
+      {
+        case: "Late Order Complaint",
+        type: "Delay",
+        urgency: "medium",
+        description: "Customer reports that the order is late beyond the ETA.",
+        cx: "1. Apologize to the customer.<br>2. Check DA status in Yelo.<br>3. Provide an ETA and offer compensation if delay is confirmed.",
+        tree: "Customer Requests → Late Order",
+        treeCx: "Customer informed + compensation applied"
+      },
+      {
+        case: "Wrong Item Delivered",
+        type: "Order Issue",
+        urgency: "urgent",
+        description: "Customer received a wrong dish or missing items.",
+        cx: "1. Apologize and confirm order ID.<br>2. Create a ticket.<br>3. Offer replacement or refund.<br>4. Escalate to restaurant if needed.",
+        tree: "Customer Requests → Wrong Item",
+        treeCx: "Replacement or Refund processed"
+      },
+      {
+        case: "Request for Refund",
+        type: "Compensation",
+        urgency: "medium",
+        description: "Customer is requesting a refund for dissatisfaction.",
+        cx: "1. Validate order details.<br>2. Confirm issue type.<br>3. Apply refund policy.<br>4. Document in ticket.",
+        tree: "Customer Requests → Refund",
+        treeCx: "Refund processed"
+      }
+    ],
       rider: [
         {
           case: "Unreachable Customer",
@@ -939,26 +1333,54 @@ function renderCases(cases, title, type = 'case'){
   }
 
   let contentHTML = '';
+  
+  // --- START: NEW CODE TO ADD SEARCH BAR DYNAMICALLY ---
+  let searchBarHTML = '';
+  const searchableTitles = ["Products", "Delivery", "Packaging", "Coffee", "Rider Support", "Restaurant Support", "Customer Requests"];
 
-  // Special style for Products
-  if (title.includes("Products")) {
-    contentHTML = '<div class="product-list">' +
-      cases.map((c, idx) => `
+  // Check if the current title is one of the sections that need a search bar
+  if (searchableTitles.some(st => title.includes(st))) {
+      // Create a clean placeholder text from the title
+      const placeholderText = title.includes("Complaints") ? title.replace(' Complaints', '') : title;
+      searchBarHTML = `
+        <div class="viewer-search-bar">
+          <input type="text" id="viewerSectionSearch" placeholder="Search in ${placeholderText} cases...">
+        </div>
+      `;
+  }
+  // --- END: NEW CODE TO ADD SEARCH BAR DYNAMICALLY ---
+
+
+  // --- START: MODIFIED RENDERING LOGIC ---
+  // The logic here remains mostly the same, it just builds the content string
+  if (title.includes("Products") || title.includes("Delivery") || title.includes("Packaging") || title.includes("Coffee")) {
+    
+    contentHTML += '<div class="product-list">' +
+      cases.map((c, idx) => {
+        let icon = '📦'; // Default icon
+        if (title.includes("Products")) icon = '🍔';
+        if (title.includes("Delivery")) icon = '🛵';
+        if (title.includes("Packaging")) icon = '🛍️';
+        if (title.includes("Coffee")) icon = '☕';
+        
+        return `
         <div class="product-card">
-          <div class="product-card-header">
-            <h3><span class="icon">${c.type.includes("Food") ? "🍔" : "📦"}</span>${c.case}</h3>
-            <span class="urgency-badge ${(c.urgency||"normal").toLowerCase()}">${c.urgency||"Normal"}</span>
+          <div>
+            <div class="product-card-header">
+              <h3><span class="icon">${icon}</span>${c.case}</h3>
+              <span class="urgency-badge ${(c.urgency||"normal").toLowerCase()}">${c.urgency||"Normal"}</span>
+            </div>
+            <span class="product-tag">${c.type}</span>
+            <p class="product-desc">${c.description||"No description"}</p>
           </div>
-          <span class="product-tag">${c.type}</span>
-          <p class="product-desc">${c.description||"No description"}</p>
-          <button onclick="openModal('productModal${idx}')">View Details</button>
+          <button onclick="openModal('${title.replace(/\s+/g, '')}Modal${idx}')">View Details</button>
         </div>
 
-        <div id="productModal${idx}" class="modal">
+        <div id="${title.replace(/\s+/g, '')}Modal${idx}" class="modal">
           <div class="modal-content">
             <div class="modal-header">
               <span>${c.case}</span>
-              <span class="modal-close" onclick="closeModal('productModal${idx}')">&times;</span>
+              <span class="modal-close" onclick="closeModal('${title.replace(/\s+/g, '')}Modal${idx}')">&times;</span>
             </div>
             <div class="modal-body">
               <h4>Case Handling Steps</h4>
@@ -972,7 +1394,7 @@ function renderCases(cases, title, type = 'case'){
             </div>
           </div>
         </div>
-      `).join('') +
+      `}).join('') +
     '</div>';
   }
   else if (type === 'document') {
@@ -995,7 +1417,7 @@ function renderCases(cases, title, type = 'case'){
         </div>
       `).join('') +
     '</div>';
-  } else { // Default 'case' type
+  } else { // Default 'case' type (This will now handle Rider Support, Restaurant Support, etc.)
     contentHTML = '<div class="case-list">'+
       cases.map(c => `
         <div class="case-card">
@@ -1029,7 +1451,65 @@ function renderCases(cases, title, type = 'case'){
     '</div>';
   }
 
-  viewerContent.innerHTML = contentHTML;
+  // Combine the search bar (if any) with the generated content
+  viewerContent.innerHTML = searchBarHTML + contentHTML;
+  // --- END: MODIFIED RENDERING LOGIC ---
+
+
+  // --- START: MODIFIED SEARCH EVENT LISTENER ---
+  // This listener now runs for any section that has a search bar
+  if (searchableTitles.some(st => title.includes(st))) {
+    const sectionSearchInput = document.getElementById('viewerSectionSearch');
+    // It's now flexible and can find either .product-card or .case-card
+    const cards = viewerContent.querySelectorAll('.product-card, .case-card'); 
+    
+    sectionSearchInput.addEventListener('input', () => {
+      const query = sectionSearchInput.value.toLowerCase();
+      cards.forEach(card => {
+        const cardText = card.textContent.toLowerCase();
+        // Use an empty string for `display` to revert to the default stylesheet value
+        card.style.display = cardText.includes(query) ? '' : 'none';
+      });
+    });
+  }
+  // --- END: MODIFIED SEARCH EVENT LISTENER ---
+
+
+  if (type === 'table') {
+    const searchInput = document.getElementById('compensationSearch');
+    const table = viewerContent.querySelector('.comp-table');
+    if (searchInput && table) {
+      const rows = table.querySelectorAll('tbody tr');
+      searchInput.addEventListener('input', () => {
+        const query = searchInput.value.toLowerCase();
+        rows.forEach(row => {
+          const rowText = row.textContent.toLowerCase();
+          row.style.display = rowText.includes(query) ? '' : 'none';
+        });
+      });
+    }
+  }
+
+  if (type === 'case') {
+    document.querySelectorAll('.case-header').forEach(header => {
+      header.addEventListener('click', () => {
+        const card = header.parentElement;
+        card.classList.toggle('open');
+        if (!card.classList.contains('open')) {
+          card.querySelectorAll('.dropdown').forEach(d => d.classList.remove('open'));
+        }
+      });
+    });
+
+    document.querySelectorAll('.dropdown-header').forEach(header => {
+      header.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const parent = header.parentElement;
+        parent.classList.toggle('open');
+      });
+    });
+  }
+
 
   if (type === 'table') {
     const searchInput = document.getElementById('compensationSearch');
@@ -1135,33 +1615,33 @@ function removeAllActiveClasses() {
         item.style.display = item.innerText.toLowerCase().includes(query) ? 'block' : 'none';
       });
       
-      [...document.querySelectorAll('.case-card, .comp-table tbody tr')].forEach(item => {
-        if (item.classList.contains('case-card')) {
-            const header = item.querySelector('.case-header');
-            if (header) {
-              const title = header.innerText.toLowerCase();
-              item.style.display = title.includes(query) ? 'block' : 'none';
-            }
-        } else { // This is a table row
-            const text = item.innerText.toLowerCase();
-            item.style.display = text.includes(query) ? '' : 'none';
-        }
+      [...document.querySelectorAll('.case-card, .product-card, .comp-table tbody tr')].forEach(item => {
+          const textContent = item.textContent.toLowerCase();
+          const shouldShow = textContent.includes(query);
+
+          if (item.tagName === 'TR') {
+              item.style.display = shouldShow ? '' : 'none';
+          } else {
+              item.style.display = shouldShow ? 'flex' : 'none'; // Use flex for cards
+          }
       });
     });
   
-function openModal(id) {
-  document.getElementById(id).style.display = 'flex';
-}
-function closeModal(id) {
-  document.getElementById(id).style.display = 'none';
-}
-window.onclick = function(event) {
-  document.querySelectorAll('.modal').forEach(modal => {
-    if (event.target === modal) modal.style.display = 'none';
-  });
-};
+    // Updated Modal Functions for new CSS animations
+    function openModal(id) {
+      document.getElementById(id).classList.add('show');
+    }
+    function closeModal(id) {
+      document.getElementById(id).classList.remove('show');
+    }
+    window.onclick = function(event) {
+      document.querySelectorAll('.modal').forEach(modal => {
+        if (event.target === modal) {
+          modal.classList.remove('show');
+        }
+      });
+    };
 
 </script>
 </body>
 </html>
-}
