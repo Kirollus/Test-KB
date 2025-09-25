@@ -16,7 +16,56 @@
       background-position: center;
       background-attachment: fixed;
       color: #111;
+      display: flex;
+      flex-direction: column;
     }
+
+    .top-nav {
+      background: rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      padding: 0 20px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      display: flex;
+      align-items: center;
+      height: 60px;
+      flex-shrink: 0;
+      width: 100%;
+      z-index: 10;
+    }
+
+    .top-nav a {
+      color: #c2187b;
+      text-decoration: none;
+      padding: 10px 18px;
+      font-weight: 600;
+      border-radius: 8px;
+      transition: background-color 0.3s, color 0.3s;
+      margin: 0 5px;
+    }
+
+    .top-nav a:hover, .top-nav a.active {
+      background-color: #fbe8f3;
+      color: #800080;
+    }
+    
+    .search-container {
+        margin-left: auto; /* Pushes search to the right */
+    }
+
+    #globalSearch {
+        padding: 8px 12px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        font-size: 14px;
+        width: 250px;
+        transition: width 0.3s ease-in-out;
+    }
+    #globalSearch:focus {
+        width: 300px;
+        outline-color: #c2187b;
+    }
+
 
     .app {
       display: grid;
@@ -25,8 +74,9 @@
       padding: 20px;
       max-width: 1200px;
       margin: 0 auto;
-      height: 100%;
-      max-height: 100vh;
+      flex-grow: 1;
+      width: 100%;
+      max-height: calc(100vh - 60px); /* Adjust for nav bar */
     }
 
     .sidebar {
@@ -233,6 +283,25 @@
 
     /* --- START: Mobile Responsive Styles --- */
     @media (max-width: 768px) {
+      .top-nav {
+        padding: 0 10px;
+        flex-wrap: wrap;
+        height: auto;
+        padding-bottom: 5px;
+      }
+      .top-nav a {
+        padding: 8px 10px;
+        font-size: 14px;
+      }
+       .search-container {
+        width: 100%;
+        margin-left: 0;
+        margin-top: 5px;
+        order: 3; /* Puts search bar on a new line */
+      }
+      #globalSearch, #globalSearch:focus {
+          width: 100%;
+      }
       .app {
         grid-template-columns: 1fr;
         padding: 10px;
@@ -258,6 +327,16 @@
 </style>
 </head>
 <body>
+  <nav class="top-nav">
+    <a href="#" class="nav-link active" data-page="home">Home</a>
+    <a href="#" class="nav-link" data-page="tips">Tips & Tricks</a>
+    <a href="#" class="nav-link" data-page="zone">Zone Map</a>
+    <a href="#" class="nav-link" data-page="updates">Updates</a>
+    <div class="search-container">
+        <input type="search" id="globalSearch" placeholder="Search everything...">
+    </div>
+  </nav>
+
   <div class="app">
     <aside class="sidebar">
       <div class="logo">
@@ -268,7 +347,7 @@
         </div>
       </div>
       <div class="sidebar-search">
-        <input type="text" id="sidebarSearch" placeholder="Search...">
+        <input type="text" id="sidebarSearch" placeholder="Search in current view...">
       </div>
       <div>
         <div class="section-title" id="catToggle">Categories <span class="arrow">▶</span></div>
@@ -303,12 +382,14 @@
       </div>
     </aside>
     <main class="viewer">
-      <h1 id="viewerTitle">Select a category or complaint to view cases</h1>
-      <div id="viewerContent" class="content muted">Results will appear here once you select a category or search.</div>
+      <h1 id="viewerTitle">Home</h1>
+      <div id="viewerContent" class="content">Welcome</div>
     </main>
   </div>
 
   <script>
+    const globalSearchInput = document.getElementById('globalSearch');
+    const navLinks = document.querySelectorAll('.nav-link');
     const categories = document.querySelectorAll('.cat');
     const complaints = document.querySelectorAll('.comp');
     const numbers = document.querySelectorAll('.num');
@@ -1316,17 +1397,20 @@
       }
 
       viewerContent.innerHTML = searchBarHTML + contentHTML;
+      attachCaseEventListeners();
 
       if (searchableTitles.some(st => title.includes(st))) {
         const sectionSearchInput = document.getElementById('viewerSectionSearch');
-        const cards = viewerContent.querySelectorAll('.product-card, .case-card');
-        sectionSearchInput.addEventListener('input', () => {
-          const query = sectionSearchInput.value.toLowerCase();
-          cards.forEach(card => {
-            const cardText = card.textContent.toLowerCase();
-            card.style.display = cardText.includes(query) ? '' : 'none';
-          });
-        });
+        if(sectionSearchInput) {
+            const cards = viewerContent.querySelectorAll('.product-card, .case-card');
+            sectionSearchInput.addEventListener('input', () => {
+              const query = sectionSearchInput.value.toLowerCase();
+              cards.forEach(card => {
+                const cardText = card.textContent.toLowerCase();
+                card.style.display = cardText.includes(query) ? '' : 'none';
+              });
+            });
+        }
       }
 
       if (type === 'table') {
@@ -1341,7 +1425,10 @@
             });
           });
         }
-      } else if (type === 'case') {
+      } 
+    }
+    
+    function attachCaseEventListeners(){
         document.querySelectorAll('.case-header').forEach(header => {
           header.addEventListener('click', () => {
             const card = header.parentElement;
@@ -1358,15 +1445,39 @@
             parent.classList.toggle('open');
           });
         });
-      }
     }
 
     function removeAllActiveClasses() {
+      navLinks.forEach(l => l.classList.remove('active'));
       categories.forEach(c => c.classList.remove('active'));
       complaints.forEach(c => c.classList.remove('active'));
       numbers.forEach(n => n.classList.remove('active'));
       processes.forEach(p => p.classList.remove('active'));
     }
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        removeAllActiveClasses();
+        link.classList.add('active');
+        const page = link.dataset.page;
+        globalSearchInput.value = '';
+        
+        if (page === 'home') {
+          viewerTitle.textContent = 'Home';
+          viewerContent.innerHTML = 'Welcome';
+        } else if (page === 'tips') {
+          viewerTitle.textContent = 'Tips & Tricks';
+          viewerContent.innerHTML = 'Content for Tips & Tricks will be available soon.';
+        } else if (page === 'zone') {
+          viewerTitle.textContent = 'Zone Map';
+          viewerContent.innerHTML = 'Content for Zone Map will be available soon.';
+        } else if (page === 'updates') {
+          viewerTitle.textContent = 'Updates';
+          viewerContent.innerHTML = 'Content for Updates will be available soon.';
+        }
+      });
+    });
 
     categories.forEach(cat => {
       cat.addEventListener('click', () => {
@@ -1426,21 +1537,77 @@
     sidebarSearch.addEventListener('input', () => {
       const query = sidebarSearch.value.toLowerCase();
       
-      [...document.querySelectorAll('.cat, .comp, .num, .proc')].forEach(item => {
-        item.style.display = item.innerText.toLowerCase().includes(query) ? 'block' : 'none';
-      });
-      
-      [...document.querySelectorAll('.case-card, .product-card, .comp-table tbody tr')].forEach(item => {
-          const textContent = item.textContent.toLowerCase();
-          const shouldShow = textContent.includes(query);
-
-          if (shouldShow) {
-            item.style.display = ''; 
-          } else {
-            item.style.display = 'none';
-          }
-      });
+      const currentlyVisibleItems = viewerContent.querySelectorAll('.case-card, .product-card, .comp-table tbody tr');
+      if (currentlyVisibleItems.length > 0) {
+        currentlyVisibleItems.forEach(item => {
+            const textContent = item.textContent.toLowerCase();
+            item.style.display = textContent.includes(query) ? '' : 'none';
+        });
+      }
     });
+    
+    function handleGlobalSearch(event){
+        const query = event.target.value.toLowerCase().trim();
+
+        if (query.length < 2) {
+            if(query.length === 0){ // Reset to home if search is cleared
+                document.querySelector('.nav-link[data-page="home"]').click();
+            } else {
+                viewerTitle.textContent = "Search";
+                viewerContent.innerHTML = "Please enter at least 2 characters to search.";
+            }
+            return;
+        }
+
+        const allCases = [];
+        // Flatten all searchable data into one array
+        Object.values(demoCases).forEach(category => {
+            if(Array.isArray(category)){
+                category.forEach(item => {
+                    // We only want to search actual cases, not documents or tables
+                    if(item.case){
+                         allCases.push(item);
+                    }
+                });
+            }
+        });
+        
+        const results = allCases.filter(item => {
+            const itemText = JSON.stringify(item).toLowerCase();
+            return itemText.includes(query);
+        });
+        
+        removeAllActiveClasses();
+        viewerTitle.textContent = `Found ${results.length} results for "${query}"`;
+        
+        if(results.length === 0){
+            viewerContent.innerHTML = "No results found.";
+            return;
+        }
+
+        const resultsHTML = '<div class="case-list">' +
+          results.map(c => `
+            <div class="case-card">
+              <div class="case-header urgency-${(c.urgency || 'normal').toLowerCase()}">
+                <div class="case-header-title">
+                  <span>${c.case}</span>
+                  ${c.type ? `<span class="case-tag type-${(c.type || '').replace(/ /g, '-').toLowerCase()}">${c.type}</span>` : ''}
+                </div>
+                <span class="arrow">▶</span>
+              </div>
+              <div class="case-body">
+                <div class="dropdown"><div class="dropdown-header">ℹ️ Description <span class="dropdown-arrow">▶</span></div><div class="dropdown-body">${c.description||"No description"}</div></div>
+                <div class="dropdown"><div class="dropdown-header">🛠️ CX Agent Action Steps <span class="dropdown-arrow">▶</span></div><div class="dropdown-body">${c.cx||"No action"}</div></div>
+                <div class="dropdown"><div class="dropdown-header">🌳 Tree <span class="dropdown-arrow">▶</span></div><div class="dropdown-body">${c.tree||"No tree data"}</div></div>
+                <div class="dropdown"><div class="dropdown-header">⬆️ CX Actions <span class="dropdown-arrow">▶</span></div><div class="dropdown-body">${c.treeCx||"No tree CX action"}</div></div>
+              </div>
+            </div>`).join('') + '</div>';
+        
+        viewerContent.innerHTML = resultsHTML;
+        attachCaseEventListeners();
+    }
+
+    globalSearchInput.addEventListener('input', handleGlobalSearch);
   
     function openModal(id) {
       document.getElementById(id).classList.add('show');
