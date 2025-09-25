@@ -628,7 +628,7 @@
   description: "- العميل اشتكى من عدم وصول منتج (قطعة) او منتجين (قطعتين) من اللي طلبها في الاوردر.",
   cx: "1. Understand the issue and apologize to the customer with empathy.<br>2. Click on 'edit' to check the order details on Yelo.<br>3. Check if there’s a ticket created by the CX Restruant team to the outbound team, reporting an out-of-stock item\s.<br>4. Inform the customer that we will refund the product's amount to his wallet and he/she can reorder it again.<br>5. Creat the ticket.<br>6. Create a wallet refund ticket to refund the customer with missing item.",
   tree: "Complaints → Packaging → Items → Missing item<br>Status: Resolved/Closed (USE THIS)",
-  treeCx: "Refund the Missing items + Delivery fess"
+  treeCx: "Refund 25% of the item amount + the delivery fees"
 },
 
 {
@@ -694,23 +694,74 @@
       ],
       coffee: [
         {
-          case: "Wrong Coffee Temperature",
-          type: "Quality Issue",
-          urgency: "medium",
-          description: "The coffee arrived cold when it was supposed to be hot.",
-          cx: "1. Apologize for the experience.<br>2. Offer a replacement or a full refund for the coffee.",
-          tree: "Coffee → Wrong Temperature",
-          treeCx: "Replacement or 100% refund for the item."
-        },
-        {
-          case: "Incorrect Coffee Order",
-          type: "Order Accuracy",
-          urgency: "urgent",
-          description: "Customer received the wrong type of coffee (e.g., latte instead of cappuccino).",
-          cx: "1. Apologize and confirm the original order.<br>2. Immediately arrange for a replacement or offer a refund.",
-          tree: "Coffee → Incorrect Order",
-          treeCx: "Replacement or 100% refund for the item."
-        }
+  case: "Bitter",
+  type: "Coffee",
+  urgency: "Bitter",
+  description: "العميل اشتكى ان القهوة طعمها مر.",
+  cx: "1. Understand the issue and apologize to the customer with empathy.<br>2. Click on 'edit' to check the order details on Yelo.<br>*Check the previous tickets, In case a ticket was handled over another channel.<br>3. Report the ticket on freshdesk and add a note in the ticket with full details.<br>4. If the customer requests a refund, it will be processed via 'Switcher'.<br>5. Compensate the customer with the designed compensation.",
+  tree: "Complaints → Product → Coffee Quality App → Bitter<br>Status: Resolved/Closed (USE THIS)",
+  treeCx: "If customer used the product offer 25%<br>If customer wants to return it or threw it offer Full Refund"
+},
+
+{
+  case: "Watery / Weak",
+  type: "Coffee",
+  urgency: "Weak",
+  description: "العميل اشتكي ان القهوه خفيفة او مميمية",
+  cx: "1. Understand the issue and apologize to the customer with empathy.<br>2. Click on 'edit' to check the order details on Yelo.<br>*Check the previous tickets, In case a ticket was handled over another channel.<br>3. Report the ticket on freshdesk and add a note in the ticket with full details.<br>4. If the customer requests a refund, it will be processed via 'Switcher'.<br>5. Compensate the customer with the designed compensation.",
+  tree: "Complaints → Product → Coffee Quality App → Watery/ Weak<br>Status: Resolved/Closed (USE THIS)",
+  treeCx: "If customer used the product offer 35%<br>If customer wants to return it or threw it offer Full Refund"
+},
+
+{
+  case: "Delivered at wrong temperature",
+  type: "Coffee",
+  urgency: "Cold-Hot",
+  description: "العميل اشتكى ان الاوردرالمفروض يوصل سخن و لكن العميل استلمه دافي او بارد.<br>العميل اشتكى ان الاوردر المفروض يوصل ساقع و لكن الثلج ساح.",
+  cx: "1. Understand the issue and apologize to the customer with empathy.<br>2. Click on 'edit' to check the order details on Yelo.<br>*Check the previous tickets, In case a ticket was handled over another channel.<br>3. Report the ticket on freshdesk and add a note in the ticket with full details.<br>4. If the customer requests a refund, it will be processed via 'Switcher'.<br>5. Compensate the customer with the designed compensation.",
+  tree: "Complaints → Product → Coffee Quality App → Delivered at wrong temperature<br>Status: Resolved/Closed (USE THIS)",
+  treeCx: "If customer used the product offer 50%<br>If customer wants to return it or threw it offer Full Refund"
+},
+
+{
+  case: "Burnt",
+  type: "Coffee",
+  urgency: "Burnt",
+  description: "العميل اشتكى ان طعم القهوه محروق.- العميل اشتكى ان القهوه طعمها تراب.",
+  cx: "1. Understand the issue and apologize to the customer with empathy.<br>2. Click on 'edit' to check the order details on Yelo.<br>*Check the previous tickets, In case a ticket was handled over another channel.<br>3. Report the ticket on freshdesk and add a note in the ticket with full details.<br>4. If the customer requests a refund, it will be processed via 'Switcher'.<br>5. Compensate the customer with the designed compensation.",
+  tree: "Complaints → Product → Coffee Quality App → Burnt<br>Status: Resolved/Closed (USE THIS)",
+  treeCx: "If customer used the product offer 15%<br>If customer wants to return it or threw it offer Full Refund"
+},
+
+{
+  case: "Spoiled",
+  type: "Coffee",
+  urgency: "Spoiled",
+  description: "- العميل اشتكى ان المشروب طعمه بايظ أو فاسد.",
+  cx: "1. Understand the issue and apologize to the customer with empathy.<br>2. Click on 'edit' to check the order details on Yelo.<br>*Check the previous tickets, In case a ticket was handled over another channel.<br>3. Report the ticket on freshdesk and add a note in the ticket with full details.<br>4. If the customer requests a refund, it will be processed via 'Switcher'.<br>5. Compensate the customer with the designed compensation.<br>6. If we need to conduct an investigation,a pickup order can be created only for 'Breadfast Kitchen & Breadfast Coffee' products using the admin panel.",
+  tree: "Complaints → Product → Coffee Quality App → Spoiled<br>Status: Resolved/Closed (USE THIS)",
+  treeCx: "If customer used the product offer 50%<br>If customer wants to return it or threw it offer Full Refund"
+},
+
+{
+  case: "Milk /Whipped Cream Smells or Tastes bad",
+  type: "Coffee",
+  urgency: "Milk-Whipped Cream",
+  description: "- العميل اشتكى ان الحليب أو الكريمة طعمه بايظ أو فاسد.",
+  cx: "1. Understand the issue and apologize to the customer with empathy.<br>2. Click on 'edit' to check the order details on Yelo.<br>*Check the previous tickets, In case a ticket was handled over another channel.<br>3. Report the ticket on freshdesk and add a note in the ticket with full details.<br>4. If the customer requests a refund, it will be processed via 'Switcher'.<br>5. Compensate the customer with the designed compensation.",
+  tree: "Complaints → Product → Coffee Quality App → Milk /Whipped Cream Smells or Tastes bad<br>Status: Resolved/Closed (USE THIS)",
+  treeCx: "If customer used the product offer 50%<br>If customer wants to return it or threw it offer Full Refund"
+},
+
+{
+  case: "Flavor Smells or Tastes bad",
+  type: "Coffee",
+  urgency: "Flavor-Taste",
+  description: "- العميل اشتكى ان القهوة طعمها وحش او رائحتها وحشة أو فيها حاجة غلط.",
+  cx: "1. Understand the issue and apologize to the customer with empathy.<br>2. Click on 'edit' to check the order details on Yelo.<br>*Check the previous tickets, In case a ticket was handled over another channel.<br>3. Report the ticket on freshdesk and add a note in the ticket with full details.<br>4. If the customer requests a refund, it will be processed via 'Switcher'.<br>5. Compensate the customer with the designed compensation.",
+  tree: "Complaints → Product → Coffee Quality App → Flavor Smells or Tastes bad<br>Status: Resolved/Closed (USE THIS)",
+  treeCx: "If customer used the product offer 25%<br>If customer wants to return it or threw it offer Full Refund"
+},
       ],
       chat: [
       {
