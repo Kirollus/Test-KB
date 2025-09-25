@@ -1,7 +1,4 @@
 
-
-
-
 <!doctype html>
 <html lang="en">
 <head>
@@ -12,16 +9,14 @@
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html, body {
-  height: 100%;
-  font-family: 'Inter', sans-serif;
-  /* --- START: التعديلات هنا --- */
-  background-image: url('back.jpg');
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed; /* بيخلي الخلفية ثابتة ومبتتحركش مع السكرول */
-  /* --- END: التعديلات هنا --- */
-  color: #111;
-}
+      height: 100%;
+      font-family: 'Inter', sans-serif;
+      background-image: url('back.jpg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      color: #111;
+    }
 
     .app {
       display: grid;
@@ -30,27 +25,31 @@
       padding: 20px;
       max-width: 1200px;
       margin: 0 auto;
+      height: 100%;
+      max-height: 100vh;
     }
 
     .sidebar {
-  /* --- START: التعديلات هنا --- */
-  background: rgba(255, 255, 255, 0.4); /* لون أبيض شفاف بنسبة 40% */
-  backdrop-filter: blur(12px); /* ده السطر المسؤول عن التأثير الضبابي */
-  -webkit-backdrop-filter: blur(12px); /* لدعم متصفح سفاري */
-  border: 1px solid rgba(255, 255, 255, 0.2); /* إطار خفيف عشان يحدد الأطراف */
-  /* --- END: التعديلات هنا --- */
-  border-radius: 12px;
-  padding: 18px;
-  box-shadow: 0 6px 18px rgba(22,27,40,0.06);
-}
+      background: rgba(255, 255, 255, 0.4);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 12px;
+      padding: 18px;
+      box-shadow: 0 6px 18px rgba(22,27,40,0.06);
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+    }
 
-    .logo { display: flex; align-items: center; gap: 12px; }
+    .logo { display: flex; align-items: center; gap: 12px; flex-shrink: 0;}
     .logo img { width: 48px; height: 48px; border-radius: 8px; }
     .brand { font-weight: 700; font-size: 18px; color: #d6007d; }
     .tagline { font-family: 'Poppins', sans-serif; font-size: 14px; color: #000; margin-top: 4px; }
 
     .sidebar-search {
       margin: 14px 0;
+      flex-shrink: 0;
     }
     .sidebar-search input {
       width: 100%;
@@ -118,18 +117,12 @@
       font-size: 14px;
     }
 
-    /* --- Visual Enhancements --- */
     .case-header.urgency-medium { border-left-color: #ffc107; }
     .case-header.urgency-high, .case-header.urgency-urgent { border-left-color: #dc3545; }
     
     .case-tag {
-      padding: 3px 10px;
-      font-size: 11px;
-      border-radius: 12px;
-      font-weight: 600;
-      text-transform: uppercase;
-      color: white;
-      margin-top: 4px;
+      padding: 3px 10px; font-size: 11px; border-radius: 12px; font-weight: 600;
+      text-transform: uppercase; color: white; margin-top: 4px;
     }
     .case-tag.type-delay { background-color: #ffc107; color: #333; }
     .case-tag.type-technical { background-color: #007bff; }
@@ -156,7 +149,6 @@
     .case-tag.type-da-misuse-of-food { background-color: #800000; }
     .case-tag.type-pricing-issue-or-description-or-photo { background-color: #6c757d; }
     .case-tag.type-rider-picked-up-wrong-order { background-color: #fd7e14; }
-    /* --- End Visual Enhancements --- */
 
     .comp-table {
       width: 100%; border-collapse: separate; border-spacing: 0; background: #fff;
@@ -174,257 +166,94 @@
     .category { display: inline-block; background: #000; color: #fff; font-weight: bold; border-radius: 20px; padding: 5px 12px; font-size: 12px; text-align: center; }
     .note { font-size: 13px; color: #555; }
     
-    /* Styles for Document View */
-    .document-view h2 {
-        font-size: 18px;
-        color: #c2187b;
-        border-bottom: 2px solid #fbe8f3;
-        padding-bottom: 8px;
-        margin-top: 20px;
-        margin-bottom: 16px;
-    }
-    .document-view h2:first-child {
-        margin-top: 0;
-    }
-    .document-view h3 {
-        font-size: 16px;
-        font-weight: 700;
-        margin-top: 16px;
-        margin-bottom: 8px;
-    }
-    .document-view ul, .document-view ol {
-        padding-left: 25px;
-        margin-bottom: 12px;
-        line-height: 1.7;
-    }
-    .document-view li {
-        margin-bottom: 6px;
-    }
-    .document-view p {
-        line-height: 1.7;
-        margin-bottom: 10px;
-    }
-    .document-view .sms-box {
-        background-color: #f1f3f5;
-        border-left: 4px solid #007bff;
-        padding: 12px;
-        margin: 16px 0;
-        font-style: italic;
-        border-radius: 4px;
-    }
+    .document-view h2 { font-size: 18px; color: #c2187b; border-bottom: 2px solid #fbe8f3; padding-bottom: 8px; margin-top: 20px; margin-bottom: 16px; }
+    .document-view h2:first-child { margin-top: 0; }
+    .document-view h3 { font-size: 16px; font-weight: 700; margin-top: 16px; margin-bottom: 8px; }
+    .document-view ul, .document-view ol { padding-left: 25px; margin-bottom: 12px; line-height: 1.7; }
+    .document-view li { margin-bottom: 6px; }
+    .document-view p { line-height: 1.7; margin-bottom: 10px; }
+    .document-view .sms-box { background-color: #f1f3f5; border-left: 4px solid #007bff; padding: 12px; margin: 16px 0; font-style: italic; border-radius: 4px; }
 
-    /* Styles for policy table */
-    .comp-policy-table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 25px;
-        border: 1px solid #eee;
-        border-radius: 12px;
-        overflow: hidden;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-    }
-    .comp-policy-table th, .comp-policy-table td {
-        padding: 14px 18px;
-        text-align: left;
-        border-bottom: 1px solid #eee;
-    }
-    .comp-policy-table tbody tr:last-child td {
-        border-bottom: none;
-    }
-    .comp-policy-table th {
-        background-color: #f8f9fa;
-        font-weight: 700;
-    }
-    .comp-policy-table td:last-child {
-        text-align: center;
-    }
-    .badge-percent {
-        background-color: #7d147d;
-        color: white;
-        padding: 6px 14px;
-        border-radius: 20px;
-        font-weight: bold;
-        font-size: 13px;
-        display: inline-block;
-    }
-    .badge-full-refund {
-        background-color: #dc3545;
-        color: white;
-        padding: 6px 14px;
-        border-radius: 20px;
-        font-weight: bold;
-        font-size: 13px;
-        display: inline-block;
-    }
+    .comp-policy-table { width: 100%; border-collapse: collapse; margin-top: 25px; border: 1px solid #eee; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+    .comp-policy-table th, .comp-policy-table td { padding: 14px 18px; text-align: left; border-bottom: 1px solid #eee; }
+    .comp-policy-table tbody tr:last-child td { border-bottom: none; }
+    .comp-policy-table th { background-color: #f8f9fa; font-weight: 700; }
+    .comp-policy-table td:last-child { text-align: center; }
+    .badge-percent { background-color: #7d147d; color: white; padding: 6px 14px; border-radius: 20px; font-weight: bold; font-size: 13px; display: inline-block; }
+    .badge-full-refund { background-color: #dc3545; color: white; padding: 6px 14px; border-radius: 20px; font-weight: bold; font-size: 13px; display: inline-block; }
   
-    /* --- START: Updated Product Card & Modal Styles --- */
-
-    /* To make the cards responsive in a grid */
-    .product-list {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-        gap: 20px;
-    }
-
+    .product-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
     .product-card {
-      position: relative;
-      background: #fff;
-      border-radius: 14px;
-      overflow: hidden;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      transition: transform .3s ease, box-shadow .3s ease;
-      padding: 18px;
-      /* margin-bottom is removed to rely on grid gap */
-      display: flex; /* Key for flexbox layout */
-      flex-direction: column; /* Stacks items vertically */
-      justify-content: space-between; /* Pushes button to the bottom */
-      height: 100%; /* Ensures cards in a row have same height */
+      position: relative; background: #fff; border-radius: 14px; overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1); transition: transform .3s ease, box-shadow .3s ease;
+      padding: 18px; display: flex; flex-direction: column; justify-content: space-between; height: 100%;
     }
-    .product-card:hover { 
-      transform: translateY(-6px); 
-      box-shadow: 0 6px 16px rgba(0,0,0,0.15);
-    }
-
-    .product-card-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 12px;
-    }
-    .product-card h3 {
-      font-size: 18px;
-      margin: 0;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      color: #243244;
-    }
-    .product-card h3 .icon {
-      font-size: 20px;
-    }
-    .urgency-badge {
-      font-size: 12px;
-      padding: 4px 10px;
-      border-radius: 20px;
-      font-weight: bold;
-      text-transform: capitalize;
-    }
+    .product-card:hover { transform: translateY(-6px); box-shadow: 0 6px 16px rgba(0,0,0,0.15); }
+    .product-card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+    .product-card h3 { font-size: 18px; margin: 0; display: flex; align-items: center; gap: 8px; color: #243244; }
+    .product-card h3 .icon { font-size: 20px; }
+    .urgency-badge { font-size: 12px; padding: 4px 10px; border-radius: 20px; font-weight: bold; text-transform: capitalize; }
     .urgent { background: #ffebee; color: #c62828; }
     .medium { background: #fff8e1; color: #f57f17; }
     .normal { background: #e8f5e9; color: #2e7d32; }
-
     .product-tag {
-      display: inline-block;
-      background: #e7f3ff;
-      color: #0056b3;
-      font-size: 12px;
-      font-weight: 600;
-      padding: 4px 10px;
-      border-radius: 12px;
-      margin: 4px 0 12px;
-      align-self: flex-start; /* Aligns tag to the start of the flex container */
+      display: inline-block; background: #e7f3ff; color: #0056b3; font-size: 12px;
+      font-weight: 600; padding: 4px 10px; border-radius: 12px; margin: 4px 0 12px; align-self: flex-start;
     }
-
-    .product-desc { 
-        font-size: 14px; 
-        color: #555; 
-        margin: 0 0 16px; 
-        flex-grow: 1; /* Allows description to take available space */
-    }
-
+    .product-desc { font-size: 14px; color: #555; margin: 0 0 16px; flex-grow: 1; }
     .product-card button {
-      background: #800080;
-      color: #fff;
-      border: none;
-      padding: 10px 16px;
-      border-radius: 8px;
-      font-weight: bold;
-      font-size: 14px;
-      cursor: pointer;
-      transition: background .3s ease, transform .2s ease;
-      width: 100%; /* Makes button take full width */
-      margin-top: auto; /* Pushes button to the bottom */
+      background: #800080; color: #fff; border: none; padding: 10px 16px; border-radius: 8px;
+      font-weight: bold; font-size: 14px; cursor: pointer; transition: background .3s ease, transform .2s ease;
+      width: 100%; margin-top: auto;
     }
-    .product-card button:hover { 
-        background: #660066; 
-        transform: scale(1.03);
-    }
+    .product-card button:hover { background: #660066; transform: scale(1.03); }
 
-    /* Modal Styles */
     .modal {
-      display: none; 
-      position: fixed; 
-      z-index: 999; 
-      left: 0; top: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.6);
-      justify-content: center; align-items: center;
-      opacity: 0;
-      transition: opacity 0.3s ease-in-out;
+      display: none; position: fixed; z-index: 999; left: 0; top: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.6); justify-content: center; align-items: center;
+      opacity: 0; transition: opacity 0.3s ease-in-out;
     }
-
-    .modal.show {
-        display: flex;
-        opacity: 1;
-    }
-
+    .modal.show { display: flex; opacity: 1; }
     .modal-content {
-      background: #fff;
-      border-radius: 12px;
-      width: 500px;
-      max-width: 95%;
-      overflow: hidden;
-      transform: scale(0.95);
-      transition: transform 0.3s ease-in-out;
-      display: flex; /* Added for flex layout */
-      flex-direction: column; /* Stack header, body, footer vertically */
-      max-height: 90vh; /* Prevent modal from being taller than the screen */
+      background: #fff; border-radius: 12px; width: 500px; max-width: 95%; overflow: hidden;
+      transform: scale(0.95); transition: transform 0.3s ease-in-out; display: flex;
+      flex-direction: column; max-height: 90vh;
     }
-    .modal.show .modal-content {
-        transform: scale(1);
-    }
-
+    .modal.show .modal-content { transform: scale(1); }
     .modal-header {
-      background: #800080;
-      color: #fff;
-      padding: 14px 18px;
-      display: flex; 
-      justify-content: space-between; 
-      align-items: center;
-      font-size: 18px;
-      font-weight: 600;
-      flex-shrink: 0; /* Prevent header from shrinking */
+      background: #800080; color: #fff; padding: 14px 18px; display: flex;
+      justify-content: space-between; align-items: center; font-size: 18px;
+      font-weight: 600; flex-shrink: 0;
     }
-    
-    .modal-body { 
-        padding: 18px; 
-        font-size: 15px; 
-        color: #333; 
-        line-height: 1.6;
-        overflow-y: auto; /* This adds the scrollbar when content is too long */
-        flex-grow: 1; /* Allows body to take available space */
-    }
+    .modal-body { padding: 18px; font-size: 15px; color: #333; line-height: 1.6; overflow-y: auto; flex-grow: 1; }
+    .modal-body h4 { margin-top: 16px; margin-bottom: 8px; color: #800080; border-bottom: 1px solid #eee; padding-bottom: 6px; }
+    .modal-body h4:first-child { margin-top: 0; }
+    .modal-close { cursor: pointer; font-size: 24px; font-weight: bold; transition: transform 0.2s ease; }
+    .modal-close:hover { transform: rotate(90deg); }
 
-    .modal-body h4 { 
-        margin-top: 16px; 
-        margin-bottom: 8px; 
-        color: #800080; 
-        border-bottom: 1px solid #eee;
-        padding-bottom: 6px;
+    /* --- START: Mobile Responsive Styles --- */
+    @media (max-width: 768px) {
+      .app {
+        grid-template-columns: 1fr;
+        padding: 10px;
+        gap: 15px;
+        max-height: none;
+        height: auto;
+      }
+      .sidebar {
+        max-height: 40vh; /* Give sidebar a max-height on mobile */
+      }
+      .viewer {
+        overflow-y: auto;
+      }
+      .product-list {
+        grid-template-columns: 1fr;
+      }
+      .modal-content {
+        width: 95%;
+      }
     }
-    .modal-body h4:first-child {
-        margin-top: 0;
-    }
-    .modal-close { 
-        cursor: pointer; 
-        font-size: 24px;
-        font-weight: bold;
-        transition: transform 0.2s ease;
-    }
-    .modal-close:hover {
-        transform: rotate(90deg);
-    }
-    /* --- END: Updated Product Card & Modal Styles --- */
+    /* --- END: Mobile Responsive Styles --- */
 
 </style>
 </head>
@@ -438,11 +267,9 @@
           <div class="tagline">From Bread To Everything</div>
         </div>
       </div>
-
       <div class="sidebar-search">
         <input type="text" id="sidebarSearch" placeholder="Search...">
       </div>
-
       <div>
         <div class="section-title" id="catToggle">Categories <span class="arrow">▶</span></div>
         <div class="categories" id="categories">
@@ -453,7 +280,6 @@
           <div class="cat" data-cat="nps" data-render-type="document">NPS</div>
         </div>
       </div>
-
       <div>
         <div class="section-title" id="compToggle">Complaints <span class="arrow">▶</span></div>
         <div class="complaints" id="complaints">
@@ -463,14 +289,12 @@
           <div class="comp" data-comp="coffee">Coffee</div>
         </div>
       </div>
-      
       <div>
         <div class="section-title" id="numToggle">Restaurants Numbers <span class="arrow">▶</span></div>
         <div class="numbers" id="numbersBox">
           <div class="num" data-num="all_numbers">Numbers</div>
         </div>
       </div>
-      
       <div>
         <div class="section-title" id="compProcessToggle">Compensation Process <span class="arrow">▶</span></div>
         <div class="processes" id="CompensationProcessBox">
@@ -478,7 +302,6 @@
         </div>
       </div>
     </aside>
-
     <main class="viewer">
       <h1 id="viewerTitle">Select a category or complaint to view cases</h1>
       <div id="viewerContent" class="content muted">Results will appear here once you select a category or search.</div>
@@ -513,7 +336,6 @@
   tree: "Ticket Tree: Restaurant, Complaints, Product, Appearance, Freshness<br>Group: CX ( As per your group )<br>Status: Resolved/Closed (USE THIS)",
   treeCx: "100% refund of the item + Delivery Fees"
 },
-
 		{
   case: "Melted",
   type: "Food Quality",
@@ -523,7 +345,6 @@
   tree: "Ticket Tree: Restaurant, Complaints, Product, Appearance, Melted<br>Group: CX ( As per your group )<br>Status: Resolved/Closed (USE THIS)",
   treeCx: "100% refund of the item + Delivery Fees"
 },
-
 		{
   case: "Size",
   type: "Food Quality",
@@ -542,7 +363,6 @@
   tree: "Ticket Tree: Restaurant, Complaints, Product, Appearance, Burned<br>Group: CX ( As per your group )<br>Status: Resolved/Closed (USE THIS)",
   treeCx: "100% refund of the item + Delivery Fees"
 },
-
 		{
   case: "Topping",
   type: "Food Quality",
@@ -552,7 +372,6 @@
   tree: "Ticket Tree: Restaurant, Complaints, Product, Appearance, Topping<br>Group: CX ( As per your group )<br>Status: Resolved/Closed (USE THIS)",
   treeCx: "100% refund of the item + Delivery Fees"
 },
-
 		{
   case: "Filling",
   type: "Food Quality",
@@ -562,7 +381,6 @@
   tree: "Ticket Tree: Restaurant, Complaints, Product, Appearance, Filling<br>Group: CX ( As per your group )<br>Status: Resolved/Closed (USE THIS)",
   treeCx: "Relative to the restaurant filling standards"
 },
-
 		{
   case: "Rotten",
   type: "Food Quality",
@@ -572,7 +390,6 @@
   tree: "Ticket Tree: Restaurant, Complaints, Product, Appearance, Rotten<br>Group: CX ( As per your group )<br>Status: Resolved/Closed (USE THIS)",
   treeCx: "100% refund of the item + Delivery Fees"
 },
-
 		{
   case: "Hot / Cold",
   type: "Food Quality",
@@ -582,7 +399,6 @@
   tree: "Ticket Tree: Restaurant, Complaints, Product, Hot / Cold<br>Group: CX ( As per your group )<br>Status: Resolved/Closed (USE THIS)",
   treeCx: "Replacement order for item if the customer accepted OR 100% refund of the item + Delivery Fees"
 },
-
 		{
   case: "Under/Overcooked",
   type: "Food Quality",
@@ -592,7 +408,6 @@
   tree: "Ticket Tree: Restaurant, Complaints, Product, Appearance, Under/Overcooked<br>Group: CX ( As per your group )<br>Status: Resolved/Closed (USE THIS)",
   treeCx: "100% refund of the item + Delivery Fees"
 },
-
 		{
   case: "Bad Smell",
   type: "Food Quality",
@@ -602,7 +417,6 @@
   tree: "Ticket Tree: Restaurant, Complaints, Product, Smell, Bad Smell<br>Group: CX ( As per your group )<br>Status: Resolved/Closed (USE THIS)",
   treeCx: "100% refund of the item + Delivery Fees"
 },
-
 		{
   case: "Spoiled Taste",
   type: "Food Quality",
@@ -612,7 +426,6 @@
   tree: "Ticket Tree: Restaurant, Complaints, Product, Taste, Spoiled Taste<br>Group: CX ( As per your group )<br>Status: Resolved/Closed (USE THIS)",
   treeCx: "100% refund of the item + Delivery Fees"
 },
-
 		{
   case: "Ingredients Quality",
   type: "Food Quality",
@@ -622,7 +435,6 @@
   tree: "Ticket Tree: Restaurant, Complaints, Product, Ingredients Quality<br>Group: CX ( As per your group )<br>Status: Resolved/Closed (USE THIS)",
   treeCx: "No refund"
 },
-
 		{
   case: "Foreign objects",
   type: "Food Quality",
@@ -632,7 +444,6 @@
   tree: "Ticket Tree: Restaurant, Complaints, Product, Appearance, Foreign objects<br>Group: CX ( As per your group )<br>Status: Resolved/Closed (USE THIS)",
   treeCx: "Full Refund + 300 EGP (fixed value) for inconvenience."
 },
-
 			{
   case: "Insects",
   type: "Food Quality",
@@ -642,7 +453,6 @@
   tree: "Ticket Tree: Restaurant, Complaints, Product, Appearance, Insects<br>Group: CX ( As per your group )<br>Status: Resolved/Closed (USE THIS)",
   treeCx: "Full Refund + 300 EGP (fixed value) for inconvenience."
 },
-
 		{
   case: "Poisoning",
   type: "Food Quality",
@@ -663,7 +473,6 @@
   tree: "Complaints → Delivery → Coffee Delivery Spilled<br>Group: CX ( AS per your group )<Br>Status: Resolved/Closed (USE THIS)",
   treeCx: "100% refund of the item + Delivery Fees"
 },
-        
         {
   case: "Wrong Collection",
   type: "Delivery Issue",
@@ -673,7 +482,6 @@
   tree: "Complaints → Delivery → Wrong Collection<br>Group: CX ( AS per your group )<Br>Status: Resolved/Closed (USE THIS)",
   treeCx: "Refund the customer with the rest of the amount"
 },
-
 		{
   case: "No change",
   type: "Delivery Issue",
@@ -683,7 +491,6 @@
   tree: "Complaints → Delivery → No Change<br>Group: CX ( AS per your group )<Br>Status: Resolved/Closed (USE THIS)",
   treeCx: "No Compenstion"
 },
-
 		{
   case: "Dress code, Smoking",
   type: "Delivery Issue",
@@ -693,7 +500,6 @@
   tree: "Complaints → Delivery → Personal Appearance → Dress code, Smoking<br>Group: CX ( AS per your group )<Br>Status: Resolved/Closed (USE THIS)",
   treeCx: "No Compenstion"
 },
-
 		{
   case: "Hygiene",
   type: "Delivery Issue",
@@ -703,7 +509,6 @@
   tree: "Complaints → Delivery → Personal Appearance → Hygiene<br>Group: CX ( AS per your group )<Br>Status: Resolved/Closed (USE THIS)",
   treeCx: "No Compenstion"
 },
-
 		{
   case: "Inappropriate attitude",
   type: "Delivery Issue",
@@ -713,7 +518,6 @@
   tree: "Complaints → Delivery → Personal behavior → Inappropirate attitude<br>Group: CX ( AS per your group )<Br>Status: Resolved/Closed (USE THIS)",
   treeCx: "50% of the order amount"
 },
-
 		{
   case: "Unnecessarily contacting customer",
   type: "Delivery Issue",
@@ -723,7 +527,6 @@
   tree: "Complaints → Delivery → Personal behavior → Unnecessarily contacting customer<br>Group: CX ( AS per your group )<Br>Status: Resolved/Closed (USE THIS)",
   treeCx: "50% of the order amount"
 },
-
 		{
   case: "Wrong Order",
   type: "Delivery Issue",
@@ -733,7 +536,6 @@
   tree: "Complaints → Delivery → Wrong Order<br>Group: CX ( AS per your group )<Br>Status: Resolved/Closed (USE THIS)",
   treeCx: "100% refund of the item + Delivery Fees"
 },
-
 		{
   case: "Order marked as delivered & cust. didn't receive it",
   type: "Order Issue",
@@ -743,7 +545,6 @@
   tree: "Complaints → Delivery → Order details → Order marked as delivered & cust. didn't receive it<br>Group: CX ( AS per your group )<Br>Status: Resolved/Closed (USE THIS)",
   treeCx: "Refund the delivery fees"
 },
-
 		{
   case: "Not following delivery instructions",
   type: "Delivery Issue",
@@ -753,7 +554,6 @@
   tree: "Complaints → Delivery → Order details → Not following delivery instructions<br>Group: CX ( AS per your group )<Br>Status: Resolved/Closed (USE THIS)",
   treeCx: "After handling the customer if the customer showed any type of frustration add DF to the wallet via wallet refund ticket "
 },
-
 		{
   case: "Theft",
   type: "Delivery Issue",
@@ -763,17 +563,15 @@
   tree: "Complaints → Delivery → Order details → Theft<br>Group: CX ( AS per your group )<Br>Status: Resolved/Closed (USE THIS)",
   treeCx: "Refund 100% + urgent escalation + follow up"
 },
-
 		{
   case: "Harassment",
   type: "Delivery Issue",
   urgency: "Harassment",
-  description: "العميل وضح ان المندوب بعت لها رسايل علي واتساب او تحرش بيها سواء تحرش لفظي او Physical",
+  description: "العميل وضح ان המندوب بعت لها رسايل علي واتساب او تحرش بيها سواء تحرش لفظي او Physical",
   cx: "1. Understand the issue and apologize to the customer with empathy.<br>2. Click on 'edit' to check the order details on Yelo.<br>3. Check the order details and ask the customer for more information about the incident.<br>4. Ask for a photo or video from the DA if they send anything to the customer or regarding the incident. (It's important to educate the customer that we need the photo for the report, and it will help us in the investigation in addition to picking up the product).<br>5. Report the ticket on freshdesk<br>6. Take the action:<br><br>-Inform the customer that a formal investigation will take place, to prevent this from happening again.<br>-Send an email with the incident details (in case of severe and urgent cases) , and follow up (if needed).<br>-Compensate the customer with the designed compensation.",
   tree: "Complaints → Delivery → Order details → Harassment<br>Group: CX ( AS per your group )<Br>Status: Resolved/Closed (USE THIS)",
   treeCx: "Refund 100% + urgent escalation + follow up"
 },
-
 		{
   case: "DA didn't call me",
   type: "Delivery Issue",
@@ -783,7 +581,6 @@
   tree: "Complaints → Delivery → Order details → DA didn't call me<br>Group: CX ( AS per your group )<Br>Status: Resolved/Closed (USE THIS)",
   treeCx: "Refund delivery fees"
 },
-
 		{
   case: "Refused to come to door / asked customer to meet outside",
   type: "Delivery Issue",
@@ -793,7 +590,6 @@
   tree: "Complaints → Delivery → Refused to come to door / asked customer to meet outside<br>Group: CX ( AS per your group )<Br>Status: Resolved/Closed (USE THIS)",
   treeCx: "Refund delivery fees"
 },
-
 		{
   case: "Moving to wrong direction",
   type: "Delivery Issue",
@@ -803,7 +599,6 @@
   tree: "Complaints → Delivery → Moving to wrong direction<br>Group: CX ( AS per your group )<Br>Status: Resolved/Closed (USE THIS)",
   treeCx: "Refund delivery fees"
 },
-
 		{
   case: "Delivery is not moving on the app",
   type: "Delivery Issue",
@@ -1010,13 +805,11 @@
                 <li>High-value tickets</li>
                 <li>Late order tickets</li>
               </ol>
-
               <h2>1. 4- and 5-Star Ratings with Comments</h2>
               <ul>
                 <li>Process will follow the same model as the Supermarket team.</li>
                 <li>Agents will review the customer’s comments and take appropriate follow-up actions.</li>
               </ul>
-
               <h2>2. Customer Requests for a Call</h2>
               <ul>
                 <li>Customer call-back requests (from any team) will be handled by the Outbound Team.</li>
@@ -1040,7 +833,6 @@
                   </ul>
                 </li>
               </ul>
-
               <h2>3. High-Value Order Tickets</h2>
               <p>A ticket is triggered when the order value is above 2,500 EGP.</p>
               <h3>Process:</h3>
@@ -1057,7 +849,6 @@
                 </li>
                 <li><strong>Priority:</strong> These tickets are high priority since restaurants will not start preparation until confirmation is received.</li>
               </ol>
-
               <h2>4. Late Order Tickets</h2>
               <p>A ticket is triggered when an order is delayed by 5 minutes or more after the agreed delivery time. (This is based on the expected time shown on switcher NOT YELO - if it's completed but late for less than 5 minutes, our action will be only calling and handling the customer)</p>
               <h3>Process (if late for more than 5 minutes):</h3>
@@ -1066,7 +857,6 @@
                 <li>Call the rider or restaurant (based on order status) to confirm the expected delivery time.</li>
                 <li>Call the customer to apologize for the delay and offer compensation based on the delay duration:</li>
               </ol>
-              
               <table class="comp-policy-table">
                 <thead>
                   <tr>
@@ -1101,7 +891,6 @@
               <ul>
                 <li>The Follow-Up Team receives a ticket 1 hour after order completion.</li>
               </ul>
-
               <h2>2. Please enter the following data in each ticket:</h2>
               <ul>
                 <li>Agent adds the customer details and fills in the NPS sheet with the following fields:
@@ -1128,18 +917,15 @@
                   </ul>
                 </li>
               </ul>
-
               <h2>3. Duplication Check</h2>
               <ul>
                 <li>On the next day, search using the customer number to confirm if the customer has already been called before, to avoid disturbing them with repeated follow-ups.</li>
               </ul>
-
               <h2>4. NPS & Compensation Logging</h2>
               <ul>
                 <li>Submit the NPS score in the tree.</li>
                 <li>Add the compensation amount (if offered) in line with the Compensation Guidelines based on the NPS score.</li>
               </ul>
-
               <h2>5. Complaint Handling</h2>
               <ul>
                 <li>If the customer raises a complaint, create a separate complaint ticket to ensure proper handling and tracking.</li>
@@ -1324,233 +1110,148 @@
       ]
     };
 
-    
-function renderCases(cases, title, type = 'case'){
-  viewerTitle.textContent = title;
-  if (!cases || cases.length === 0){
-    viewerContent.innerHTML = "<p class='muted'>No cases found.</p>";
-    return;
-  }
+    function renderCases(cases, title, type = 'case'){
+      viewerTitle.textContent = title;
+      if (!cases || cases.length === 0){
+        viewerContent.innerHTML = "<p class='muted'>No cases found.</p>";
+        return;
+      }
 
-  let contentHTML = '';
-  
-  // --- START: NEW CODE TO ADD SEARCH BAR DYNAMICALLY ---
-  let searchBarHTML = '';
-  const searchableTitles = ["Products", "Delivery", "Packaging", "Coffee", "Rider Support", "Restaurant Support", "Customer Requests"];
+      let contentHTML = '';
+      let searchBarHTML = '';
+      const searchableTitles = ["Products", "Delivery", "Packaging", "Coffee", "Rider Support", "Restaurant Support", "Customer Requests"];
 
-  // Check if the current title is one of the sections that need a search bar
-  if (searchableTitles.some(st => title.includes(st))) {
-      // Create a clean placeholder text from the title
-      const placeholderText = title.includes("Complaints") ? title.replace(' Complaints', '') : title;
-      searchBarHTML = `
-        <div class="viewer-search-bar">
-          <input type="text" id="viewerSectionSearch" placeholder="Search in ${placeholderText} cases...">
-        </div>
-      `;
-  }
-  // --- END: NEW CODE TO ADD SEARCH BAR DYNAMICALLY ---
-
-
-  // --- START: MODIFIED RENDERING LOGIC ---
-  // The logic here remains mostly the same, it just builds the content string
-  if (title.includes("Products") || title.includes("Delivery") || title.includes("Packaging") || title.includes("Coffee")) {
-    
-    contentHTML += '<div class="product-list">' +
-      cases.map((c, idx) => {
-        let icon = '📦'; // Default icon
-        if (title.includes("Products")) icon = '🍔';
-        if (title.includes("Delivery")) icon = '🛵';
-        if (title.includes("Packaging")) icon = '🛍️';
-        if (title.includes("Coffee")) icon = '☕';
-        
-        return `
-        <div class="product-card">
-          <div>
-            <div class="product-card-header">
-              <h3><span class="icon">${icon}</span>${c.case}</h3>
-              <span class="urgency-badge ${(c.urgency||"normal").toLowerCase()}">${c.urgency||"Normal"}</span>
+      if (searchableTitles.some(st => title.includes(st))) {
+          const placeholderText = title.includes("Complaints") ? title.replace(' Complaints', '') : title;
+          searchBarHTML = `
+            <div class="viewer-search-bar">
+              <input type="text" id="viewerSectionSearch" placeholder="Search in ${placeholderText} cases...">
             </div>
-            <span class="product-tag">${c.type}</span>
-            <p class="product-desc">${c.description||"No description"}</p>
-          </div>
-          <button onclick="openModal('${title.replace(/\s+/g, '')}Modal${idx}')">View Details</button>
-        </div>
+          `;
+      }
 
-        <div id="${title.replace(/\s+/g, '')}Modal${idx}" class="modal">
-          <div class="modal-content">
-            <div class="modal-header">
-              <span>${c.case}</span>
-              <span class="modal-close" onclick="closeModal('${title.replace(/\s+/g, '')}Modal${idx}')">&times;</span>
-            </div>
-            <div class="modal-body">
-              <h4>Case Handling Steps</h4>
-              <p>${c.cx||"No action steps"}</p>
-
-              <h4>Compensation Needed</h4>
-              <p>${c.treeCx||"No compensation info"}</p>
-
-              <h4>Ticket Tree</h4>
-              <p>${c.tree||"No tree data"}</p>
-            </div>
-          </div>
-        </div>
-      `}).join('') +
-    '</div>';
-  }
-  else if (type === 'document') {
-    contentHTML = `<div class="document-view">${cases.map(c => c.content || "").join('')}</div>`;
-  } else if (type === 'table') {
-    contentHTML = cases.map(c => c.content || "").join('');
-  } else if (type === 'single_dropdown') {
-    contentHTML = '<div class="case-list">' +
-      cases.map(c => `
-        <div class="case-card open">
-          <div class="case-header" style="cursor: default;">${c.case}</div>
-          <div class="case-body" style="max-height: 1500px;">
-            <div class="dropdown open">
-              <div class="dropdown-header" style="cursor: default;">${c.dropdownTitle || 'Details'} <span class="dropdown-arrow" style="transform: rotate(90deg);">▶</span></div>
-              <div class="dropdown-body" style="max-height: 500px; padding: 12px 16px;">
-                ${c.content || "No content defined."}
+      if (title.includes("Products") || title.includes("Delivery") || title.includes("Packaging") || title.includes("Coffee")) {
+        contentHTML += '<div class="product-list">' +
+          cases.map((c, idx) => {
+            let icon = '📦';
+            if (title.includes("Products")) icon = '🍔';
+            if (title.includes("Delivery")) icon = '🛵';
+            if (title.includes("Packaging")) icon = '🛍️';
+            if (title.includes("Coffee")) icon = '☕';
+            
+            return `
+            <div class="product-card">
+              <div>
+                <div class="product-card-header">
+                  <h3><span class="icon">${icon}</span>${c.case}</h3>
+                  <span class="urgency-badge ${(c.urgency||"normal").toLowerCase()}">${c.urgency||"Normal"}</span>
+                </div>
+                <span class="product-tag">${c.type}</span>
+                <p class="product-desc">${c.description||"No description"}</p>
               </div>
+              <button onclick="openModal('${title.replace(/\s+/g, '')}Modal${idx}')">View Details</button>
             </div>
-          </div>
-        </div>
-      `).join('') +
-    '</div>';
-  } else { // Default 'case' type (This will now handle Rider Support, Restaurant Support, etc.)
-    contentHTML = '<div class="case-list">'+
-      cases.map(c => `
-        <div class="case-card">
-          <div class="case-header urgency-${(c.urgency || 'normal').toLowerCase()}">
-            <div class="case-header-title">
-              <span>${c.case}</span>
-              ${c.type ? `<span class="case-tag type-${(c.type || '').replace(/ /g, '-').toLowerCase()}">${c.type}</span>` : ''}
-            </div>
-            <span class="arrow">▶</span>
-          </div>
-          <div class="case-body">
-            <div class="dropdown">
-              <div class="dropdown-header">ℹ️ Description <span class="dropdown-arrow">▶</span></div>
-              <div class="dropdown-body">${c.description||"No description"}</div>
-            </div>
-            <div class="dropdown">
-              <div class="dropdown-header">🛠️ CX Agent Action Steps <span class="dropdown-arrow">▶</span></div>
-              <div class="dropdown-body">${c.cx||"No action"}</div>
-            </div>
-            <div class="dropdown">
-              <div class="dropdown-header">🌳 Tree <span class="dropdown-arrow">▶</span></div>
-              <div class="dropdown-body">${c.tree||"No tree data"}</div>
-            </div>
-            <div class="dropdown">
-              <div class="dropdown-header">⬆️ CX Actions <span class="dropdown-arrow">▶</span></div>
-              <div class="dropdown-body">${c.treeCx||"No tree CX action"}</div>
-            </div>
-          </div>
-        </div>
-      `).join('')+
-    '</div>';
-  }
+            <div id="${title.replace(/\s+/g, '')}Modal${idx}" class="modal">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <span>${c.case}</span>
+                  <span class="modal-close" onclick="closeModal('${title.replace(/\s+/g, '')}Modal${idx}')">&times;</span>
+                </div>
+                <div class="modal-body">
+                  <h4>Case Handling Steps</h4><p>${c.cx||"No action steps"}</p>
+                  <h4>Compensation Needed</h4><p>${c.treeCx||"No compensation info"}</p>
+                  <h4>Ticket Tree</h4><p>${c.tree||"No tree data"}</p>
+                </div>
+              </div>
+            </div>`;
+          }).join('') + '</div>';
+      } else if (type === 'document') {
+        contentHTML = `<div class="document-view">${cases.map(c => c.content || "").join('')}</div>`;
+      } else if (type === 'table') {
+        contentHTML = cases.map(c => c.content || "").join('');
+      } else if (type === 'single_dropdown') {
+        contentHTML = '<div class="case-list">' +
+          cases.map(c => `
+            <div class="case-card open">
+              <div class="case-header" style="cursor: default;">${c.case}</div>
+              <div class="case-body" style="max-height: 1500px;">
+                <div class="dropdown open">
+                  <div class="dropdown-header" style="cursor: default;">${c.dropdownTitle || 'Details'} <span class="dropdown-arrow" style="transform: rotate(90deg);">▶</span></div>
+                  <div class="dropdown-body" style="max-height: 500px; padding: 12px 16px;">${c.content || "No content defined."}</div>
+                </div>
+              </div>
+            </div>`).join('') + '</div>';
+      } else { // Default 'case' type
+        contentHTML = '<div class="case-list">' +
+          cases.map(c => `
+            <div class="case-card">
+              <div class="case-header urgency-${(c.urgency || 'normal').toLowerCase()}">
+                <div class="case-header-title">
+                  <span>${c.case}</span>
+                  ${c.type ? `<span class="case-tag type-${(c.type || '').replace(/ /g, '-').toLowerCase()}">${c.type}</span>` : ''}
+                </div>
+                <span class="arrow">▶</span>
+              </div>
+              <div class="case-body">
+                <div class="dropdown"><div class="dropdown-header">ℹ️ Description <span class="dropdown-arrow">▶</span></div><div class="dropdown-body">${c.description||"No description"}</div></div>
+                <div class="dropdown"><div class="dropdown-header">🛠️ CX Agent Action Steps <span class="dropdown-arrow">▶</span></div><div class="dropdown-body">${c.cx||"No action"}</div></div>
+                <div class="dropdown"><div class="dropdown-header">🌳 Tree <span class="dropdown-arrow">▶</span></div><div class="dropdown-body">${c.tree||"No tree data"}</div></div>
+                <div class="dropdown"><div class="dropdown-header">⬆️ CX Actions <span class="dropdown-arrow">▶</span></div><div class="dropdown-body">${c.treeCx||"No tree CX action"}</div></div>
+              </div>
+            </div>`).join('') + '</div>';
+      }
 
-  // Combine the search bar (if any) with the generated content
-  viewerContent.innerHTML = searchBarHTML + contentHTML;
-  // --- END: MODIFIED RENDERING LOGIC ---
+      viewerContent.innerHTML = searchBarHTML + contentHTML;
 
-
-  // --- START: MODIFIED SEARCH EVENT LISTENER ---
-  // This listener now runs for any section that has a search bar
-  if (searchableTitles.some(st => title.includes(st))) {
-    const sectionSearchInput = document.getElementById('viewerSectionSearch');
-    // It's now flexible and can find either .product-card or .case-card
-    const cards = viewerContent.querySelectorAll('.product-card, .case-card'); 
-    
-    sectionSearchInput.addEventListener('input', () => {
-      const query = sectionSearchInput.value.toLowerCase();
-      cards.forEach(card => {
-        const cardText = card.textContent.toLowerCase();
-        // Use an empty string for `display` to revert to the default stylesheet value
-        card.style.display = cardText.includes(query) ? '' : 'none';
-      });
-    });
-  }
-  // --- END: MODIFIED SEARCH EVENT LISTENER ---
-
-
-  if (type === 'table') {
-    const searchInput = document.getElementById('compensationSearch');
-    const table = viewerContent.querySelector('.comp-table');
-    if (searchInput && table) {
-      const rows = table.querySelectorAll('tbody tr');
-      searchInput.addEventListener('input', () => {
-        const query = searchInput.value.toLowerCase();
-        rows.forEach(row => {
-          const rowText = row.textContent.toLowerCase();
-          row.style.display = rowText.includes(query) ? '' : 'none';
+      if (searchableTitles.some(st => title.includes(st))) {
+        const sectionSearchInput = document.getElementById('viewerSectionSearch');
+        const cards = viewerContent.querySelectorAll('.product-card, .case-card');
+        sectionSearchInput.addEventListener('input', () => {
+          const query = sectionSearchInput.value.toLowerCase();
+          cards.forEach(card => {
+            const cardText = card.textContent.toLowerCase();
+            card.style.display = cardText.includes(query) ? '' : 'none';
+          });
         });
-      });
-    }
-  }
+      }
 
-  if (type === 'case') {
-    document.querySelectorAll('.case-header').forEach(header => {
-      header.addEventListener('click', () => {
-        const card = header.parentElement;
-        card.classList.toggle('open');
-        if (!card.classList.contains('open')) {
-          card.querySelectorAll('.dropdown').forEach(d => d.classList.remove('open'));
+      if (type === 'table') {
+        const searchInput = document.getElementById('compensationSearch');
+        if (searchInput) {
+          const table = viewerContent.querySelector('.comp-table');
+          const rows = table.querySelectorAll('tbody tr');
+          searchInput.addEventListener('input', () => {
+            const query = searchInput.value.toLowerCase();
+            rows.forEach(row => {
+              row.style.display = row.textContent.toLowerCase().includes(query) ? '' : 'none';
+            });
+          });
         }
-      });
-    });
-
-    document.querySelectorAll('.dropdown-header').forEach(header => {
-      header.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const parent = header.parentElement;
-        parent.classList.toggle('open');
-      });
-    });
-  }
-
-
-  if (type === 'table') {
-    const searchInput = document.getElementById('compensationSearch');
-    const table = viewerContent.querySelector('.comp-table');
-    if (searchInput && table) {
-      const rows = table.querySelectorAll('tbody tr');
-      searchInput.addEventListener('input', () => {
-        const query = searchInput.value.toLowerCase();
-        rows.forEach(row => {
-          const rowText = row.textContent.toLowerCase();
-          row.style.display = rowText.includes(query) ? '' : 'none';
+      } else if (type === 'case') {
+        document.querySelectorAll('.case-header').forEach(header => {
+          header.addEventListener('click', () => {
+            const card = header.parentElement;
+            card.classList.toggle('open');
+            if (!card.classList.contains('open')) {
+              card.querySelectorAll('.dropdown').forEach(d => d.classList.remove('open'));
+            }
+          });
         });
-      });
+        document.querySelectorAll('.dropdown-header').forEach(header => {
+          header.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const parent = header.parentElement;
+            parent.classList.toggle('open');
+          });
+        });
+      }
     }
-  }
 
-  if (type === 'case') {
-    document.querySelectorAll('.case-header').forEach(header => {
-      header.addEventListener('click', () => {
-        const card = header.parentElement;
-        card.classList.toggle('open');
-        if (!card.classList.contains('open')) {
-          card.querySelectorAll('.dropdown').forEach(d => d.classList.remove('open'));
-        }
-      });
-    });
-
-    document.querySelectorAll('.dropdown-header').forEach(header => {
-      header.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const parent = header.parentElement;
-        parent.classList.toggle('open');
-      });
-    });
-  }
-}
-function removeAllActiveClasses() {
-        categories.forEach(c => c.classList.remove('active'));
-        complaints.forEach(c => c.classList.remove('active'));
-        numbers.forEach(n => n.classList.remove('active'));
-        processes.forEach(p => p.classList.remove('active'));
+    function removeAllActiveClasses() {
+      categories.forEach(c => c.classList.remove('active'));
+      complaints.forEach(c => c.classList.remove('active'));
+      numbers.forEach(n => n.classList.remove('active'));
+      processes.forEach(p => p.classList.remove('active'));
     }
 
     categories.forEach(cat => {
@@ -1619,15 +1320,14 @@ function removeAllActiveClasses() {
           const textContent = item.textContent.toLowerCase();
           const shouldShow = textContent.includes(query);
 
-          if (item.tagName === 'TR') {
-              item.style.display = shouldShow ? '' : 'none';
+          if (shouldShow) {
+            item.style.display = ''; 
           } else {
-              item.style.display = shouldShow ? 'flex' : 'none'; // Use flex for cards
+            item.style.display = 'none';
           }
       });
     });
   
-    // Updated Modal Functions for new CSS animations
     function openModal(id) {
       document.getElementById(id).classList.add('show');
     }
@@ -1641,7 +1341,6 @@ function removeAllActiveClasses() {
         }
       });
     };
-
 </script>
 </body>
 </html>
