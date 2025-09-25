@@ -854,7 +854,7 @@
         {
           case: "Unreachable Customer",
           type: 'Unreachable',
-          urgency: 'medium',
+          urgency: 'urgent',
           description: "The DA arrived at the customer’s door or compound gate, but the customer did not open the door or answer phone calls.",
           cx: "1. Ask for the order number.<br>2. Check it on Yelo.<br>3. Check the tickets first. (We can ask the DA to wait on hold until we call the customer and get back to him).<br>4. Report the ticket on freshdesk and add a note in the ticket with full details.<br>5. The cx agent must call the customer 3 trials within 7 minutes.<br>• If the customer answers: validate with them that the DA tried to call to deliver the order but received no response.<br> • If the customer confirms, mark the ticket as valid.<br>• If the customer denies being called, mark the ticket as invalid.<br>• If the customer does not answer after three attempts: cancel the order and send an “unreachable” SMS to the customer, including a refund if payment was made by credit card.",
           tree: "Internal Request- Riders Support- Unreachable Customer",
@@ -872,7 +872,7 @@
 		{
 		  case: "Restaurant Delay While Dispatch",
 		  type: 'Restaurant Delay While Dispatch',
-		  urgency: 'medium',
+		  urgency: 'urgent',
 		  description: "The DA is waiting at the restaurant for the order, but dispatch is delayed (handover not happening on time).",
 		  cx: "•Ask for the order number<br>•Check it on Yelo.<br>•Report the ticket on freshdesk and add a note in the ticket with full details.<br>•Call the restaurant to confirm the estimated time for dispatching the order to the DA and check for any issues or high volume causing the delay<br>•Notify the DA of the ETA, and Send Delay SMS to customer to be informed of the delay<br>•If the restaurant delay is due to high order volume, request that the restaurant set themselves as busy to prevent future delays. (We can offer to set the restaurant as busy when we have access) (if the DA called within the preperation time > CX validation: invalid - action: DA handled).",
 		  tree: "Internal Request- Riders Support- Restaurant Delay While Dispatch",
