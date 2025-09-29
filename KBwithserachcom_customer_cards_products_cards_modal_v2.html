@@ -40,17 +40,33 @@
       padding: 10px 18px;
       font-weight: 600;
       border-radius: 8px;
-      transition: background-color 0.3s, color 0.3s;
+      transition: background-color 0.3s, color 0.3s, transform 0.2s ease;
       margin: 0 5px;
       display: flex;
       align-items: center;
       gap: 8px;
     }
 
-    .top-nav a:hover, .top-nav a.active {
+    .top-nav a:not(.nav-button-cta):hover, 
+    .top-nav a:not(.nav-button-cta).active {
       background-color: #fbe8f3;
       color: #800080;
     }
+
+    /* --- START: CTA Button Styles --- */
+    .nav-button-cta {
+        background-color: #800080;
+        color: #fff !important;
+        font-weight: bold;
+        padding: 8px 16px;
+        margin-left: auto; /* Pushes the button to the far right */
+    }
+    .nav-button-cta:hover {
+        background-color: #660066;
+        transform: scale(1.05);
+    }
+    /* --- END: CTA Button Styles --- */
+
 
     .app {
       display: grid;
@@ -94,6 +110,35 @@
       font-size: 14px;
     }
 
+    .sidebar-order-lookup {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 14px;
+    }
+    .sidebar-order-lookup input {
+        flex-grow: 1;
+        width: 100%;
+        padding: 8px 12px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        font-size: 14px;
+    }
+    .sidebar-order-lookup button {
+        background: #800080;
+        color: #fff;
+        border: none;
+        padding: 8px 12px;
+        border-radius: 8px;
+        font-weight: bold;
+        font-size: 12px;
+        cursor: pointer;
+        transition: background .3s ease;
+        white-space: nowrap;
+    }
+    .sidebar-order-lookup button:hover {
+        background: #660066;
+    }
+
     .section-title {
       font-weight: 700; margin: 10px 0; color: #243244;
       cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 8px;
@@ -108,7 +153,7 @@
     }
     .categories.open, .complaints.open, .numbers.open, .processes.open { 
       padding-left: 5px; 
-      max-height: 500px; /* Increased to avoid clipping content */
+      max-height: 500px;
     }
 
     .cat, .comp, .num, .proc {
@@ -282,7 +327,6 @@
     .modal-close { cursor: pointer; font-size: 24px; font-weight: bold; transition: transform 0.3s ease, color 0.3s; }
     .modal-close:hover { transform: rotate(90deg) scale(1.2); }
 
-    /* --- START: Mobile Responsive Styles --- */
     @media (max-width: 768px) {
       .app {
         grid-template-columns: 1fr;
@@ -292,7 +336,7 @@
         height: auto;
       }
       .sidebar {
-        max-height: 40vh; /* Give sidebar a max-height on mobile */
+        max-height: 40vh;
       }
       .viewer {
         overflow-y: auto;
@@ -304,7 +348,6 @@
         width: 95%;
       }
     }
-    /* --- END: Mobile Responsive Styles --- */
 
   </style>
 </head>
@@ -314,6 +357,7 @@
     <a href="#" class="nav-link" data-page="tips"><i class="fa-solid fa-lightbulb"></i> Tips & Tricks</a>
     <a href="#" class="nav-link" data-page="zone"><i class="fa-solid fa-map-location-dot"></i> Zone Map</a>
     <a href="#" class="nav-link" data-page="updates"><i class="fa-solid fa-bell"></i> Updates</a>
+    <a href="https://freshdesk.breadfast.com/a/tickets/new" target="_blank" class="nav-link nav-button-cta"><i class="fa-solid fa-plus"></i> Create TT</a>
   </nav>
 
   <div class="app">
@@ -326,8 +370,14 @@
         </div>
       </div>
       <div class="sidebar-search">
-        <input type="text" id="sidebarSearch" placeholder="Search...">
+        <input type="text" id="sidebarSearch" placeholder="Search All Cases...">
       </div>
+
+      <div class="sidebar-order-lookup">
+        <input type="text" id="orderNumberInput" placeholder="Enter Order Number...">
+        <button id="openOrderBtn">Open Order</button>
+      </div>
+
       <div>
         <div class="section-title" id="catToggle"><i class="fa-solid fa-list"></i> Categories <span class="arrow">▶</span></div>
         <div class="categories" id="categories">
@@ -361,8 +411,8 @@
       </div>
     </aside>
     <main class="viewer">
-      <h1 id="viewerTitle">Home</h1>
-      <div id="viewerContent" class="content">Welcome</div>
+      <h1 id="viewerTitle" style="text-align: center;">Food Team</h1>
+      <div id="viewerContent" class="content">Welcome To Food Knowledge Base</div>
     </main>
   </div>
   <script>
@@ -1284,8 +1334,9 @@
 
     function renderCases(cases, title, type = 'case'){
       viewerTitle.textContent = title;
+      viewerTitle.style.textAlign = 'left';
       if (!cases || cases.length === 0){
-        viewerContent.innerHTML = "<p class='muted'>No cases found.</p>";
+        viewerContent.innerHTML = `<p style="text-align:center; color: #555;">No cases found.</p>`;
         return;
       }
 
@@ -1425,28 +1476,36 @@
     }
 
     function removeAllActiveClasses() {
-      navLinks.forEach(l => l.classList.remove('active'));
+      document.querySelectorAll('.nav-link[data-page]').forEach(l => l.classList.remove('active'));
       [...document.querySelectorAll('.cat, .comp, .num, .proc')].forEach(item => item.classList.remove('active'));
     }
 
     navLinks.forEach(link => {
       link.addEventListener('click', (e) => {
+        if (!link.dataset.page) {
+          return; 
+        }
+        
         e.preventDefault();
         removeAllActiveClasses();
         link.classList.add('active');
         const page = link.dataset.page;
         
         if (page === 'home') {
-          viewerTitle.textContent = 'Home';
-          viewerContent.innerHTML = 'Welcome';
+          viewerTitle.textContent = 'Food Team';
+          viewerTitle.style.textAlign = 'center';
+          viewerContent.innerHTML = 'Welcome To Food Knowledge Base';
         } else if (page === 'tips') {
           viewerTitle.textContent = 'Tips & Tricks';
+          viewerTitle.style.textAlign = 'left';
           viewerContent.innerHTML = 'Content for Tips & Tricks will be available soon.';
         } else if (page === 'zone') {
           viewerTitle.textContent = 'Zone Map';
+          viewerTitle.style.textAlign = 'left';
           viewerContent.innerHTML = 'Content for Zone Map will be available soon.';
         } else if (page === 'updates') {
           viewerTitle.textContent = 'Updates';
+          viewerTitle.style.textAlign = 'left';
           viewerContent.innerHTML = 'Content for Updates will be available soon.';
         }
       });
@@ -1455,6 +1514,7 @@
     [...categories, ...complaints, ...numbers, ...processes].forEach(item => {
         item.addEventListener('click', () => {
             removeAllActiveClasses();
+            document.querySelector('.nav-link.active[data-page]')?.classList.remove('active');
             item.classList.add('active');
             const dataKey = Object.keys(item.dataset)[0];
             const renderType = item.dataset.renderType || (dataKey === 'proc' ? 'table' : (dataKey === 'num' ? 'single_dropdown' : 'case'));
@@ -1477,21 +1537,10 @@
       });
     }
 
-    // --- START: Setup for Collapsible Sidebar Sections ---
-setupToggle('catToggle','categories');
-setupToggle('compToggle','complaints');
-setupToggle('numToggle','numbersBox'); 
-setupToggle('compProcessToggle','CompensationProcessBox'); 
-// --- END: Setup for Collapsible Sidebar Sections ---
-
-    const sidebarSearch = document.getElementById('sidebarSearch');
-    sidebarSearch.addEventListener('input', () => {
-      const query = sidebarSearch.value.toLowerCase();
-      
-      [...document.querySelectorAll('.cat, .comp, .num, .proc')].forEach(item => {
-        item.style.display = item.innerText.toLowerCase().includes(query) ? 'block' : 'none';
-      });
-    });
+    setupToggle('catToggle','categories');
+    setupToggle('compToggle','complaints');
+    setupToggle('numToggle','numbersBox'); 
+    setupToggle('compProcessToggle','CompensationProcessBox'); 
   
     function openModal(id) {
       document.getElementById(id).classList.add('show');
@@ -1506,6 +1555,64 @@ setupToggle('compProcessToggle','CompensationProcessBox');
         }
       });
     };
+
+    const openOrderBtn = document.getElementById('openOrderBtn');
+    const orderNumberInput = document.getElementById('orderNumberInput');
+
+    function openOrderLink() {
+        const orderNumber = orderNumberInput.value.trim();
+        if (orderNumber) {
+            const url = `https://foodadmin.breadfast.com/en/dashboard/orders/details/${orderNumber}`;
+            window.open(url, '_blank');
+        }
+    }
+
+    openOrderBtn.addEventListener('click', openOrderLink);
+    orderNumberInput.addEventListener('keypress', function(event) {
+        if (event.key === 'Enter') {
+            openOrderLink();
+        }
+    });
+
+    // --- START: Global Sidebar Search Logic ---
+    const sidebarSearch = document.getElementById('sidebarSearch');
+
+    function debounce(func, delay) {
+        let timeout;
+        return function(...args) {
+            clearTimeout(timeout);
+            timeout = setTimeout(() => func.apply(this, args), delay);
+        };
+    }
+
+    const performSearch = (query) => {
+        if (query.length < 2) {
+            // If search is cleared, you might want to revert to the home screen
+            // or the last viewed category. For now, we'll just clear the content.
+            if(document.querySelector('.nav-link[data-page="home"]')) {
+               document.querySelector('.nav-link[data-page="home"]').click();
+            }
+            return;
+        }
+
+        let results = [];
+        const allCaseArrays = Object.values(demoCases).flat();
+
+        results = allCaseArrays.filter(caseItem => {
+            // Simple check for content-only items (like NPS)
+            if(caseItem.content) return false;
+            // Search through all properties of a case object
+            return JSON.stringify(caseItem).toLowerCase().includes(query);
+        });
+        
+        renderCases(results, `Search Results for "${query}"`);
+    };
+
+    sidebarSearch.addEventListener('input', debounce((event) => {
+        performSearch(event.target.value.toLowerCase().trim());
+    }, 300));
+    // --- END: Global Sidebar Search Logic ---
+
 </script>
 </body>
 </html>
