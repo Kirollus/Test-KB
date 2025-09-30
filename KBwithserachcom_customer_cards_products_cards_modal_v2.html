@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -238,8 +239,6 @@
     .case-tag.type-da-misuse-of-food { background-color: #800000; }
     .case-tag.type-pricing-issue-or-description-or-photo { background-color: #6c757d; }
     .case-tag.type-rider-picked-up-wrong-order { background-color: #fd7e14; }
-    .case-tag.type-fast-food, .case-tag.type-pizza { background-color: #17a2b8; }
-
 
     .comp-table {
       width: 100%; border-collapse: separate; border-spacing: 0; background: #fff;
@@ -1159,32 +1158,10 @@
         }
       ],
       all_numbers: [
-        { 
-            case: "Breadfast Kitchen", 
-            type: 'Fast Food', 
-            urgency: 'normal', 
-            description: "Contact number for KFC customer service and support.", 
-            cx: "Call <strong>19019</strong> for support.", 
-            tree: "N/A", 
-            treeCx: "N/A" 
-        },
-        { 
-            case: "Pizza Hut", 
-            type: 'Pizza', 
-            urgency: 'normal', 
-            description: "Contact number for Pizza Hut customer service and support.", 
-            cx: "Call <strong>19000</strong> for support.", 
-            tree: "N/A", 
-            treeCx: "N/A" 
-        },
-        { 
-            case: "McDonald's", 
-            type: 'Fast Food', 
-            urgency: 'normal', 
-            description: "Contact number for McDonald's customer service and support.", 
-            cx: "Call <strong>19991</strong> for support.", 
-            tree: "N/A", 
-            treeCx: "N/A" 
+        {
+          case: "Restaurant Contact List",
+          dropdownTitle: "Numbers",
+          content: "<strong>KFC:</strong> 19019<br><strong>Pizza Hut:</strong> 19000<br><strong>McDonald's:</strong> 19991"
         }
       ],
       main_process: [
@@ -1207,7 +1184,7 @@
               <tbody>
                 <tr>
                   <td><strong>Bad Quality Food</strong></td>
-                  <td>Not fresh food, undercooked, overcooked, spoiled, Bad Smell, Rotten.</td>
+                  <td>Not fresh food, undercooked, overcooked, spoiled.</td>
                   <td>📷 Picture</td>
                   <td><span class="badge refund">Refund</span> 100% refund of the item + Delivery Fees</td>
                   <td class="note">Request photo evidence when possible.</td>
@@ -1217,7 +1194,7 @@
                   <td><strong>Wrong Temperature (Cold/Hot) Food</strong></td>
                   <td>Cold food when it should be hot; melted/damaged cold items.</td>
                   <td>—</td>
-                  <td><span class="badge replacement">Refund</span> 100% refund + Delivery Fees</td>
+                  <td><span class="badge replacement">Replacement</span> Replacement order OR 100% refund + Delivery Fees</td>
                   <td>—</td>
                   <td><span class="category">Food Quality</span></td>
                 </tr>
@@ -1225,7 +1202,7 @@
                   <td><strong>Wrong Order Delivered</strong></td>
                   <td>Completely different dishes/items.</td>
                   <td>—</td>
-                  <td><span class="badge replacement">Refund</span> 100% refund + Delivery Fees</td>
+                  <td><span class="badge replacement">Replacement</span> Replacement OR 100% refund + Delivery Fees</td>
                   <td>—</td>
                   <td><span class="category">Order Issue</span></td>
                 </tr>
@@ -1233,7 +1210,7 @@
                   <td><strong>Missing Items</strong></td>
                   <td>Main item missing.</td>
                   <td>—</td>
-                  <td><span class="badge replacement">Refund</span> 100% refund + Delivery Fees</td>
+                  <td><span class="badge replacement">Replacement</span> Replacement OR 100% refund + Delivery Fees</td>
                   <td>—</td>
                   <td><span class="category">Order Issue</span></td>
                 </tr>
@@ -1273,16 +1250,16 @@
                   <td><strong>Delivery Agent Misconduct</strong></td>
                   <td>Inappropriate attitude / mishandling food.</td>
                   <td>—</td>
-                  <td><span class="badge refund">Refund</span> 50% refund, theft or harassment = 100% + escalation</td>
+                  <td><span class="badge refund">Refund</span> 50% refund; theft/harassment = 100% + escalation</td>
                   <td>—</td>
                   <td><span class="category">Operational</span></td>
                 </tr>
                 <tr>
                   <td><strong>Smashed / Spilled</strong></td>
                   <td>Food smashed or spilled during handling/delivery.</td>
-                  <td>📷 Picture</td>
-                  <td><span class="badge replacement">Refund</span> 100% refund + Delivery Fees</td>
-                  <td class="note">Request photo evidence when possible.</td>
+                  <td>—</td>
+                  <td><span class="badge replacement">Replacement</span> Replacement OR 100% refund + Delivery Fees</td>
+                  <td>—</td>
                   <td><span class="category">Food Quality</span></td>
                 </tr>
                 <tr>
@@ -1343,7 +1320,7 @@
                 </tr>
                 <tr>
                   <td><strong>Food Safety – Moderate</strong></td>
-                  <td>Foreign object, Insects, Poisoning, illness complaints, medical proof.</td>
+                  <td>Foreign object, illness complaints, medical proof.</td>
                   <td>📷 Picture</td>
                   <td><span class="badge refund">Refund</span> Full Refund + 300 EGP</td>
                   <td class="note">Request photo evidence when possible.</td>
@@ -1366,7 +1343,7 @@
 
       let contentHTML = '';
       let searchBarHTML = '';
-      const searchableTitles = ["Products", "Delivery", "Packaging", "Coffee", "Rider Support", "Restaurant Support", "Customer Requests", "Numbers"];
+      const searchableTitles = ["Products", "Delivery", "Packaging", "Coffee", "Rider Support", "Restaurant Support", "Customer Requests"];
 
       if (searchableTitles.some(st => title.includes(st))) {
           const placeholderText = title.includes("Complaints") ? title.replace(' Complaints', '') : title;
@@ -1416,7 +1393,19 @@
         contentHTML = `<div class="document-view">${cases.map(c => c.content || "").join('')}</div>`;
       } else if (type === 'table') {
         contentHTML = cases.map(c => c.content || "").join('');
-      } else { // Default 'case' type, now includes 'Numbers'
+      } else if (type === 'single_dropdown') {
+        contentHTML = '<div class="case-list">' +
+          cases.map(c => `
+            <div class="case-card open">
+              <div class="case-header" style="cursor: default;">${c.case}</div>
+              <div class="case-body" style="max-height: 1500px;">
+                <div class="dropdown open">
+                  <div class="dropdown-header" style="cursor: default;">${c.dropdownTitle || 'Details'} <span class="dropdown-arrow" style="transform: rotate(90deg);">▶</span></div>
+                  <div class="dropdown-body" style="max-height: 500px; padding: 12px 16px;">${c.content || "No content defined."}</div>
+                </div>
+              </div>
+            </div>`).join('') + '</div>';
+      } else { // Default 'case' type
         contentHTML = '<div class="case-list">' +
           cases.map(c => `
             <div class="case-card">
@@ -1429,7 +1418,7 @@
               </div>
               <div class="case-body">
                 <div class="dropdown"><div class="dropdown-header">ℹ️ Description <span class="dropdown-arrow">▶</span></div><div class="dropdown-body">${c.description||"No description"}</div></div>
-                <div class="dropdown"><div class="dropdown-header">📞 Contact Number <span class="dropdown-arrow">▶</span></div><div class="dropdown-body">${c.cx||"No action"}</div></div>
+                <div class="dropdown"><div class="dropdown-header">🛠️ CX Agent Action Steps <span class="dropdown-arrow">▶</span></div><div class="dropdown-body">${c.cx||"No action"}</div></div>
                 <div class="dropdown"><div class="dropdown-header">🌳 Tree <span class="dropdown-arrow">▶</span></div><div class="dropdown-body">${c.tree||"No tree data"}</div></div>
                 <div class="dropdown"><div class="dropdown-header">⬆️ CX Actions <span class="dropdown-arrow">▶</span></div><div class="dropdown-body">${c.treeCx||"No tree CX action"}</div></div>
               </div>
@@ -1529,7 +1518,7 @@
             document.querySelector('.nav-link.active[data-page]')?.classList.remove('active');
             item.classList.add('active');
             const dataKey = Object.keys(item.dataset)[0];
-            const renderType = item.dataset.renderType || (dataKey === 'proc' ? 'table' : 'case'); // Modified this line
+            const renderType = item.dataset.renderType || (dataKey === 'proc' ? 'table' : (dataKey === 'num' ? 'single_dropdown' : 'case'));
             const title = item.innerText;
             renderCases(demoCases[item.dataset[dataKey]] || [], title, renderType);
         });
