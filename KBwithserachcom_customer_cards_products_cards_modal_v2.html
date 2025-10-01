@@ -929,31 +929,31 @@
       ],
       chat: [
       {
-        case: "Late Order Complaint",
-        type: "Delay",
+        case: "Pay next time",
+        type: "Request",
         urgency: "medium",
-        description: "Customer reports that the order is late beyond the ETA.",
-        cx: "1. Apologize to the customer.<br>2. Check DA status in Yelo.<br>3. Provide an ETA and offer compensation if delay is confirmed.",
-        tree: "Customer Requests → Late Order",
-        treeCx: "Customer informed + compensation applied"
+        description: "لو العميل طلب انه يدفع ثمن الاوردر في المره القادمه او دفع جزء وهيدفع الجزء الباقي في المره القادمه",
+        cx: "1. Click on 'edit' to check the order details on Yelo.<br>2. Call the customer and ask for the reason.<br>3. Report the ticket on freshdesk and add a note in the ticket with full details.<br>4. If the customer wants to pay via credit card, educate them about the top-up option. The amount will be added as a negative balance to their account, which may prevent new orders from being placed until the balance is settled through the top-up feature.<br>5. If the customer agrees, the agent will inform the DA to leave.<br>6. Route the ticket to the Live Ops team including in the ticket's note the collected amount by DA vs actual amount as the live ops settle this later with Finance.<br>7. If the customer refused to pay via top-up or cash, proceed with the cancellation, record or select the cancellation reason in Yelo, and inform the DA of the cancellation.",
+        tree: "Customer Request → Pay next time",
+        treeCx: "No Action<br>Status: Resolved/Closed (USE THIS)<br>Group: CX - Outbound"
       },
       {
-        case: "Wrong Item Delivered",
-        type: "Order Issue",
-        urgency: "urgent",
-        description: "Customer received a wrong dish or missing items.",
-        cx: "1. Apologize and confirm order ID.<br>2. Create a ticket.<br>3. Offer replacement or refund.<br>4. Escalate to restaurant if needed.",
-        tree: "Customer Requests → Wrong Item",
-        treeCx: "Replacement or Refund processed"
+        case: "Manual phone verification",
+        type: "Verification",
+        urgency: "medium",
+        description: "لما بيجيلنا تيكت من السيستم ان العميل عايز Manual verification او لو جت تيكت requet a call بنفس الطلب",
+        cx: "1. We don’t verify it from our side.<br>2. Click on 'edit' to check the order details on Yelo.<br>3. Ask the customer for his/her number.<br>4. Create an outbound ticket and add a note with the outbound template.<br>5. Inform the customer that he/she will receive a call from one from our team.<br>'In case the customer was logged in and there a connected switcher account, add the switcher link in the ticket's template'.<br>-The OB should contact the customer to confirm their phone number and email address, then verify the customer's account using the switcher.<br><br>Create 'Ticket' to the 'Outbound' team<br><br>Open 'Switcher'<br>Click on 'Show contact information'<br>Click on 'Generate Code'<br>Check you email to get the pass code<br>Click on 'Verify'",
+        tree: "Customer Request → Manual phone verification",
+        treeCx: "No Action<br>Status: Resolved/Closed (USE THIS)<br>Group: CX - Outbound"
       },
       {
-        case: "Request for Refund",
-        type: "Compensation",
+        case: "Paid bill receipt",
+        type: "bill",
         urgency: "medium",
-        description: "Customer is requesting a refund for dissatisfaction.",
-        cx: "1. Validate order details.<br>2. Confirm issue type.<br>3. Apply refund policy.<br>4. Document in ticket.",
-        tree: "Customer Requests → Refund",
-        treeCx: "Refund processed"
+        description: "العميل طلب ريسيت فاتورة الكهرباء او المياة عشان يتاكد انه دفعها خلاص",
+        cx: "-Educate the customer on how to download the receipt by following these steps:<br><br>1. Open the 'App'<br>2. Go to 'More'3. Go to 'Activity history'<br>4. Choose 'Completed'<br>5. Click on 'View receipt'<br>6. Click on 'Download'",
+        tree: "Customer Request → Paid bill receipt",
+        treeCx: "No Action<br>Status: Resolved/Closed (USE THIS)<br>Group: CX - Outbound"
       }
     ],
       rider: [
