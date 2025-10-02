@@ -375,6 +375,26 @@
       border: 1px solid #f3cce1;
     }
     /* END: Compensation Calculator Styles */
+    
+    /* START: Restaurant Numbers Table Styles */
+    .numbers-table {
+      margin-top: 20px;
+    }
+    .numbers-table th {
+      font-size: 15px;
+    }
+    .numbers-table td {
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .numbers-table .restaurant-name {
+      color: #333;
+    }
+    .numbers-table .restaurant-number {
+      color: #800080;
+      letter-spacing: 1px;
+    }
+    /* END: Restaurant Numbers Table Styles */
 
     @media (max-width: 768px) {
       .app {
@@ -1098,6 +1118,15 @@
         cx: "1. Click on 'edit' to check the order details on Yelo.<br>2. Call the customer and ask for the Cancellation reason.<br>3. Report the ticket on freshdesk and add a note in the ticket with full details.<br>4. Proceed with the cancellation, record or select the cancellation reason in Yelo, and inform the DA of the cancellation.",
         tree: "Customer Request → Cancel order → Order by mistake",
         treeCx: "100% refund of the order + Delivery Fees.<br>Action: No Action<br>Status: Resolved/Closed (USE THIS)<br>Group: CX - Outbound"
+      },
+	{
+        case: "Delay",
+        type: "Delay",
+        urgency: "medium",
+        description: "العميل طلب الغاء الاوردر لانه متأخر ولكنه جوا timeslot , الاوردر هيتأخر من المطعم او المندوب ولما بلغنا العميل طلب الغاء الاوردر",
+        cx: "1. Click on 'edit' to check the order details on Yelo.<br>2. Call the customer and ask for the Cancellation reason.<br>3. Report the ticket on freshdesk and add a note in the ticket with full details.<br>4. Proceed with the cancellation, record or select the cancellation reason in Yelo, and inform the DA of the cancellation.",
+        tree: "Customer Request → Cancel order → Delay",
+        treeCx: "100% refund of the order + Delivery Fees.<br>Action: No Action<br>Status: Resolved/Closed (USE THIS)<br>Group: CX - Outbound"
       }
     ],
       rider: [
@@ -1357,11 +1386,20 @@
         }
       ],
       all_numbers: [
-        {
-          case: "Restaurant Contact List",
-          dropdownTitle: "Numbers",
-          content: "<strong>KFC:</strong> 19019<br><strong>Pizza Hut:</strong> 19000<br><strong>McDonald's:</strong> 19991"
-        }
+        { name: "Breadfast Kitchen", number: "01025034993" },
+        { name: "Breadfast Kitchen", number: "01013623060" },
+        { name: "Breadfast Kitchen", number: "01140208264" },
+        { name: "Breadfast Kitchen", number: "01112554118" },
+        { name: "Wok and Walk", number: "01014445740" },
+        { name: "Wok and Walk", number: "01125136603" },
+        { name: "Karak Boy", number: "01103833380" },
+        { name: "Karak Boy", number: "01551539003" },
+        { name: "Ama Sushi", number: "01100678062" },
+        { name: "Don Pollo", number: "01200830182" },
+	{ name: "Dark Solution", number: "01286555968" },
+	{ name: "Meat Party", number: "01023377878" },
+	{ name: "Mayyal Mayyal", number: "01007776169" },
+	{ name: "Cafe Greco", number: "01007776169" }
       ],
       main_process: [
         { 
@@ -1566,8 +1604,38 @@
             </div>
           `;
       }
+      
+      // --- START: NEW LOGIC FOR RESTAURANT NUMBERS ---
+      if (title.includes("Numbers")) {
+        const numbersSearchBar = `
+          <div class="viewer-search-bar">
+            <input type="text" id="numbersSearch" placeholder="Search by restaurant name or number...">
+          </div>
+        `;
+        
+        const numbersTable = `
+          <table class="comp-table numbers-table">
+            <thead>
+              <tr>
+                <th>Restaurant Name</th>
+                <th>Contact Number</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${cases.map(num => `
+                <tr>
+                  <td class="restaurant-name">${num.name}</td>
+                  <td class="restaurant-number">${num.number}</td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        `;
+        contentHTML = numbersSearchBar + numbersTable;
 
-      if (title.includes("Products") || title.includes("Delivery") || title.includes("Packaging") || title.includes("Coffee")) {
+      // --- END: NEW LOGIC FOR RESTAURANT NUMBERS ---
+
+      } else if (title.includes("Products") || title.includes("Delivery") || title.includes("Packaging") || title.includes("Coffee")) {
         contentHTML += '<div class="product-list">' +
           cases.map((c, idx) => {
             let icon = '📦';
@@ -1606,18 +1674,6 @@
         contentHTML = `<div class="document-view">${cases.map(c => c.content || "").join('')}</div>`;
       } else if (type === 'table') {
         contentHTML = cases.map(c => c.content || "").join('');
-      } else if (type === 'single_dropdown') {
-        contentHTML = '<div class="case-list">' +
-          cases.map(c => `
-            <div class="case-card open">
-              <div class="case-header" style="cursor: default;">${c.case}</div>
-              <div class="case-body" style="max-height: 1500px;">
-                <div class="dropdown open">
-                  <div class="dropdown-header" style="cursor: default;">${c.dropdownTitle || 'Details'} <span class="dropdown-arrow" style="transform: rotate(90deg);">▶</span></div>
-                  <div class="dropdown-body" style="max-height: 500px; padding: 12px 16px;">${c.content || "No content defined."}</div>
-                </div>
-              </div>
-            </div>`).join('') + '</div>';
       } else { // Default 'case' type
         contentHTML = '<div class="case-list">' +
           cases.map(c => `
@@ -1641,7 +1697,7 @@
       viewerContent.innerHTML = searchBarHTML + contentHTML;
       attachCaseEventListeners();
 
-      // --- START: Search and Calculator Logic ---
+      // --- START: Search and Calculator and NEW Numbers Filter Logic ---
       if (document.getElementById('viewerSectionSearch')) {
         const sectionSearchInput = document.getElementById('viewerSectionSearch');
         if(sectionSearchInput) {
@@ -1655,6 +1711,24 @@
             });
         }
       }
+
+      // --- START: ADDED Numbers search logic ---
+      const numbersSearchInput = document.getElementById('numbersSearch');
+      if (numbersSearchInput) {
+        const tableRows = viewerContent.querySelectorAll('.numbers-table tbody tr');
+        numbersSearchInput.addEventListener('input', () => {
+          const query = numbersSearchInput.value.toLowerCase().trim();
+          tableRows.forEach(row => {
+            const rowText = row.textContent.toLowerCase();
+            if (rowText.includes(query)) {
+              row.style.display = '';
+            } else {
+              row.style.display = 'none';
+            }
+          });
+        });
+      }
+      // --- END: ADDED Numbers search logic ---
 
       if (document.getElementById('compensationSearch')) {
         const searchInput = document.getElementById('compensationSearch');
@@ -1688,7 +1762,7 @@
           calcAmountInput.addEventListener('input', calculateAndUpdate);
           calcPercentInput.addEventListener('input', calculateAndUpdate);
       }
-      // --- END: Search and Calculator Logic ---
+      // --- END: Search and Calculator and NEW Numbers Filter Logic ---
     }
     
     function attachCaseEventListeners(){
@@ -1752,7 +1826,7 @@
             document.querySelector('.nav-link.active[data-page]')?.classList.remove('active');
             item.classList.add('active');
             const dataKey = Object.keys(item.dataset)[0];
-            const renderType = item.dataset.renderType || (dataKey === 'proc' ? 'table' : (dataKey === 'num' ? 'single_dropdown' : 'case'));
+            const renderType = item.dataset.renderType || (dataKey === 'proc' ? 'table' : 'case');
             const title = item.innerText;
             renderCases(demoCases[item.dataset[dataKey]] || [], title, renderType);
         });
