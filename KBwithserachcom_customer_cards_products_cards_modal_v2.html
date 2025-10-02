@@ -935,7 +935,7 @@
         description: "لو العميل طلب انه يدفع ثمن الاوردر في المره القادمه او دفع جزء وهيدفع الجزء الباقي في المره القادمه",
         cx: "1. Click on 'edit' to check the order details on Yelo.<br>2. Call the customer and ask for the reason.<br>3. Report the ticket on freshdesk and add a note in the ticket with full details.<br>4. If the customer wants to pay via credit card, educate them about the top-up option. The amount will be added as a negative balance to their account, which may prevent new orders from being placed until the balance is settled through the top-up feature.<br>5. If the customer agrees, the agent will inform the DA to leave.<br>6. Route the ticket to the Live Ops team including in the ticket's note the collected amount by DA vs actual amount as the live ops settle this later with Finance.<br>7. If the customer refused to pay via top-up or cash, proceed with the cancellation, record or select the cancellation reason in Yelo, and inform the DA of the cancellation.",
         tree: "Customer Request → Pay next time",
-        treeCx: "No Action<br>Status: Resolved/Closed (USE THIS)<br>Group: CX - Outbound"
+        treeCx: "Action: No Action<br>Status: Resolved/Closed (USE THIS)<br>Group: CX - Outbound"
       },
       {
         case: "Manual phone verification",
@@ -944,7 +944,7 @@
         description: "لما بيجيلنا تيكت من السيستم ان العميل عايز Manual verification او لو جت تيكت requet a call بنفس الطلب",
         cx: "1. We don’t verify it from our side.<br>2. Click on 'edit' to check the order details on Yelo.<br>3. Ask the customer for his/her number.<br>4. Create an outbound ticket and add a note with the outbound template.<br>5. Inform the customer that he/she will receive a call from one from our team.<br>'In case the customer was logged in and there a connected switcher account, add the switcher link in the ticket's template'.<br>-The OB should contact the customer to confirm their phone number and email address, then verify the customer's account using the switcher.<br><br>Create 'Ticket' to the 'Outbound' team<br><br>Open 'Switcher'<br>Click on 'Show contact information'<br>Click on 'Generate Code'<br>Check you email to get the pass code<br>Click on 'Verify'",
         tree: "Customer Request → Manual phone verification",
-        treeCx: "No Action<br>Status: Resolved/Closed (USE THIS)<br>Group: CX - Outbound"
+        treeCx: "Action: No Action<br>Status: Resolved/Closed (USE THIS)<br>Group: CX - Outbound"
       },
       {
         case: "Paid bill receipt",
@@ -953,7 +953,151 @@
         description: "العميل طلب ريسيت فاتورة الكهرباء او المياة عشان يتاكد انه دفعها خلاص",
         cx: "-Educate the customer on how to download the receipt by following these steps:<br><br>1. Open the 'App'<br>2. Go to 'More'3. Go to 'Activity history'<br>4. Choose 'Completed'<br>5. Click on 'View receipt'<br>6. Click on 'Download'",
         tree: "Customer Request → Paid bill receipt",
-        treeCx: "No Action<br>Status: Resolved/Closed (USE THIS)<br>Group: CX - Outbound"
+        treeCx: "Action: No Action<br>Status: Resolved/Closed (USE THIS)<br>Group: CX - Outbound"
+      },
+	{
+        case: "Cash Refund",
+        type: "Cash Refund",
+        urgency: "medium",
+        description: "العميل طلب ان الفلوس ترجع كاش",
+        cx: "1. Click on 'edit' to check the order details on Yelo.<br>2.Ask for the reason of the refund & validate the reason.<br>3. Check the previous tickets, In case a ticket was handled over another channel.<br>4. Report the ticket on freshdesk and add a note in the ticket with full details.<br>5. Create a pickup order including the cash amount using admin panel.<br>6. Should be handled by retention team.",
+        tree: "Customer Request → Cash Refund",
+        treeCx: "Action: Refunded<br>Status: Resolved/Closed (USE THIS)<br>Group: CX - Outbound"
+      },
+	{
+        case: "Customer requested to be called",
+        type: "Call",
+        urgency: "medium",
+        description: "لو الدليفري وصل للعميل والعميل لقي ان في مشكله فالاوردر وطلب من الدليفري انه عايز حد يتواصل معاه وكانت مشكلته مش موجوده فال Tree، مثال (العميل كان فاكر ان في item هتوصل بشكل معين ووصلت بشكل تاني بس مش complain, it's just a clarification)",
+        cx: "1. Try to help the customer first.<br>2. Click on 'edit' to check the order details on Yelo.<br>3. If the customer insisted to be called, create a ticket.<br>4. Inform the customer that he will be contacted, as soon as possible within the day.<br>5. If the customer requests to place a scheduled order, educate the customer to choose 'Schedule' and then select the desired time.<br><br>-Click on 'Create ticket'<br>-Fill the needed properties<br>-Click on 'Create'",
+        tree: "Customer Request → Requested to be called",
+        treeCx: "Action: No Action<br>Status: Open<br>Group: CX - Outbound"
+      },
+	{
+        case: "Wallet Refund",
+        type: "Wallet Refund",
+        urgency: "medium",
+        description: "لو العميل طلب اننا نعمله Refund على محفظة بريدفاست",
+        cx: "1. Create a ticket.<br>2. Add a note with (Switcher - Reason - Order Number - Order link - amount to be refunded)<br>-Fill the needed properties<br>-Click on 'Create'<br>3. Inform the customer that the amount will be refunded within 24 hours.",
+        tree: "Customer Request → Wallet Refund",
+        treeCx: "Action: No Action<br>Status: Open<br>Group: CX Seniors Restaurant"
+      },
+	{
+        case: "Refund on Credit Card request",
+        type: "Refund on Credit Card request",
+        urgency: "medium",
+        description: "لو العميل طالب اوردر ودافع كريديت وهنضطر نكنسله لاي سبب والعميل طلب الفلوس ترجلعه علي الكريديت مره تانيه",
+        cx: "1. Create a ticket.<br>2. Add a note with (Switcher - Reason - Order Number - Order link - amount to be refunded)<br>-Fill the needed properties<br>-Click on 'Create'<br>3. Inform the customer that the amount will be refunded within 24 hours.",
+        tree: "Customer Request → Refund on Credit Card request",
+        treeCx: "Action: No Action<br>Status: Open<br>Group: CX Seniors Restaurant"
+      },
+	{
+        case: "Proof of refund",
+        type: "Proof of refund",
+        urgency: "medium",
+        description: "العميل طلب اثبات بان المبلغ تم رده من خلالنا",
+        cx: "1. Create a ticket.<br>2. Add a note with (Switcher - Reason - Order Number - Order link - amount to be refunded)<br>-Fill the needed properties<br>-Click on 'Create'",
+        tree: "Customer Request → Proof of refund",
+        treeCx: "Action: No Action<br>Status: Open<br>Group: CX Seniors Restaurant"
+      },
+	{
+        case: "Unblock account",
+        type: "Unblock account",
+        urgency: "medium",
+        description: "- العميل بلغ انه معموله Block, و بعد التحقق لقينا ان ال Abuse score بتاعه طبيعى.",
+        cx: "-",
+        tree: "Customer Request → Unblock account",
+        treeCx: "Action: No Action<br>Status: Open<br>Group: CX Seniors Restaurant"
+      },
+	{
+        case: "Emergency",
+        type: "Cancel the order",
+        urgency: "medium",
+        description: "العميل طلب الغاء الاوردر لوجود حاله طارئه عنده",
+        cx: "1. Click on 'edit' to check the order details on Yelo.<br>2. Call the customer and ask for the Cancellation reason.<br>3. Report the ticket on freshdesk and add a note in the ticket with full details.<br>4. Proceed with the cancellation, record or select the cancellation reason in Yelo, and inform the DA of the cancellation.",
+        tree: "Customer Request → Cancel order → Emergency",
+        treeCx: "100% refund of the order + Delivery Fees<br>Action: No Action<br>Status: Resolved/Closed (USE THIS)<br>Group: CX - Outbound"
+      },
+	{
+        case: "Manual Void",
+        type: "Manual Void",
+        urgency: "medium",
+        description: "العميل طلب اوردر و لكن status بتاعته failed او not received و لكن فلوسه لسه معلقه",
+        cx: "Check Payment Panel<br><br>1. Create a ticket.<br>2. Add a note with (Switcher - Reason - Order Number - Order link - amount to be refunded)<br>3. Inform the customer that the amount will be voided on the spot or within 3 hours.<br>4. Attach the transaction screenshot from the payment panel to the ticket's note.",
+        tree: "Customer Request → Manual Void",
+        treeCx: "Action: No Action<br>Status: Open<br>Group: CX Seniors Restaurant"
+      },
+	{
+        case: "Edit Order",
+        type: "Edit Order",
+        urgency: "medium",
+        description: "العميل محتاج يعدل علي الاوردر فطلب الغاؤه",
+        cx: "1. Click on 'edit' to check the order details on Yelo.<br>2. Call the customer and ask for the Cancellation reason.<br>3. Report the ticket on freshdesk and add a note in the ticket with full details.<br>4. Proceed with the cancellation, record or select the cancellation reason in Yelo, and inform the DA of the cancellation.",
+        tree: "Customer Request → Cancel order → Edit Order",
+        treeCx: "100% refund of the order + Delivery Fees.<br>Action: No Action<br>Status: Resolved/Closed (USE THIS)<br>Group: CX - Outbound"
+      },
+	{
+        case: "Wrong Order",
+        type: "Wrong Order",
+        urgency: "medium",
+        description: "العميل استلم الاوردر غلط وطلب الغاؤه , المندوب وصل اوردر غلط للعميل ولما وصله الاوردر الصح طلب الغاؤه",
+        cx: "1. Click on 'edit' to check the order details on Yelo.<br>2. Call the customer and ask for the Cancellation reason.<br>3. Report the ticket on freshdesk and add a note in the ticket with full details.<br>4. Proceed with the cancellation, record or select the cancellation reason in Yelo, and inform the DA of the cancellation.",
+        tree: "Customer Request → Cancel order → Wrong Order",
+        treeCx: "100% refund of the order + Delivery Fees.<br>Action: No Action<br>Status: Resolved/Closed (USE THIS)<br>Group: CX - Outbound"
+      },
+	{
+        case: "Missing items",
+        type: "Missing items",
+        urgency: "medium",
+        description: "العميل طلب الغاء الطلب لاستلام الاوردر ناقص",
+        cx: "1. Click on 'edit' to check the order details on Yelo.<br>2. Call the customer and ask for the Cancellation reason.<br>3. Report the ticket on freshdesk and add a note in the ticket with full details.<br>4. Proceed with the cancellation, record or select the cancellation reason in Yelo, and inform the DA of the cancellation.",
+        tree: "Customer Request → Cancel order → Missing items",
+        treeCx: "100% refund of the order + Delivery Fees.<br>Action: No Action<br>Status: Resolved/Closed (USE THIS)<br>Group: CX - Outbound"
+      },
+	{
+        case: "Wrong Address",
+        type: "Wrong Address",
+        urgency: "medium",
+        description: "العميل طلب الاوردر علي عنوان غلط",
+        cx: "1. Click on 'edit' to check the order details on Yelo.<br>2. Call the customer and ask for the Cancellation reason.<br>3. Report the ticket on freshdesk and add a note in the ticket with full details.<br>4. Proceed with the cancellation, record or select the cancellation reason in Yelo, and inform the DA of the cancellation.",
+        tree: "Customer Request → Cancel order → Wrong Address",
+        treeCx: "100% refund of the order + Delivery Fees.<br>Action: No Action<br>Status: Resolved/Closed (USE THIS)<br>Group: CX - Outbound"
+      },
+	{
+        case: "Change time slot",
+        type: "Change time slot",
+        urgency: "medium",
+        description: "العميل طلب تغيير timeslot",
+        cx: "1. Click on 'edit' to check the order details on Yelo.<br>2. Call the customer and ask for the Cancellation reason.<br>3. Report the ticket on freshdesk and add a note in the ticket with full details.<br>4. Proceed with the cancellation, record or select the cancellation reason in Yelo, and inform the DA of the cancellation.",
+        tree: "Customer Request → Cancel order → Change time slot",
+        treeCx: "100% refund of the order + Delivery Fees.<br>Action: No Action<br>Status: Resolved/Closed (USE THIS)<br>Group: CX - Outbound"
+      },
+	{
+        case: "Item out of stock",
+        type: "OOS",
+        urgency: "medium",
+        description: "العميل طلب الغاء الاوردر بسبب oos item",
+        cx: "1. Click on 'edit' to check the order details on Yelo.<br>2. Call the customer and ask for the Cancellation reason.<br>3. Report the ticket on freshdesk and add a note in the ticket with full details.<br>4. Proceed with the cancellation, record or select the cancellation reason in Yelo, and inform the DA of the cancellation.",
+        tree: "Customer Request → Cancel order → Item out of stock",
+        treeCx: "100% refund of the order + Delivery Fees.<br>Action: No Action<br>Status: Resolved/Closed (USE THIS)<br>Group: CX - Outbound"
+      },
+	{
+        case: "Forget to add the voucher",
+        type: "Voucher",
+        urgency: "medium",
+        description: "العميل طلب يلغي الاوردر لانه نسي يضيف ال voucher",
+        cx: "1. Click on 'edit' to check the order details on Yelo.<br>2. Call the customer and ask for the Cancellation reason.<br>3. Report the ticket on freshdesk and add a note in the ticket with full details.<br>4. Proceed with the cancellation, record or select the cancellation reason in Yelo, and inform the DA of the cancellation.",
+        tree: "Customer Request → Cancel order → Forget to add the voucher",
+        treeCx: "100% refund of the order + Delivery Fees.<br>Action: No Action<br>Status: Resolved/Closed (USE THIS)<br>Group: CX - Outbound"
+      },
+	{
+        case: "Order by mistake",
+        type: "Order by mistake",
+        urgency: "medium",
+        description: "العميل طلب الاوردر عن طريق الخطأ",
+        cx: "1. Click on 'edit' to check the order details on Yelo.<br>2. Call the customer and ask for the Cancellation reason.<br>3. Report the ticket on freshdesk and add a note in the ticket with full details.<br>4. Proceed with the cancellation, record or select the cancellation reason in Yelo, and inform the DA of the cancellation.",
+        tree: "Customer Request → Cancel order → Order by mistake",
+        treeCx: "100% refund of the order + Delivery Fees.<br>Action: No Action<br>Status: Resolved/Closed (USE THIS)<br>Group: CX - Outbound"
       }
     ],
       rider: [
