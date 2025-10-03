@@ -319,6 +319,9 @@
     </main>
   </div>
   <script>
+    // --- NEW: EDIT THIS DATE MANUALLY ---
+    const MANUAL_LAST_UPDATED_DATE = "4 October 2025"; // <-- قم بتعديل هذا التاريخ
+
     const navLinks = document.querySelectorAll('.nav-link');
     const categories = document.querySelectorAll('.cat');
     const complaints = document.querySelectorAll('.comp');
@@ -1060,7 +1063,7 @@
         }
       ],
       restaurant: [
-        { case: "DA is late for pick-up", type: 'DA is late for pick-up', urgency: 'urgent', description: "The Delivery Agent has not arrived at the restaurant within the expected time window, causing a delay in food handover.", cx: "-Ask for the order number.<br>-Check it on Yelo.<br>-Create a ticket.<br>-Check the DA’s location on the map.<br>-Call the DA to confirm the estimated delivery time to the restaurant.<br>-Notify the restaurant with the ETA.", tree: "Internal Request- Resturant Support- DA is late for pick-up", treeCx: "Group: CX Restaurant Support<br>CX Action: Resturant Handled<br>Status: Resolved/Closed (USE THIS)<br>Status: Resolved/Closed (USE THIS)" },
+        { case: "DA is late for pick-up", type: 'DA is late for pick-up', urgency: 'urgent', description: "The Delivery Agent has not arrived at the restaurant within the expected time window, causing a delay in food handover.", cx: "-Ask for the order number.<br>-Check it on Yelo.<br>-Create a ticket.<br>-Check the DA’s location on the map.<br>-Call the DA to confirm the estimated delivery time to the restaurant.<br>-Notify the restaurant with the ETA.", tree: "Internal Request- Resturant Support- DA is late for pick-up", treeCx: "Group: CX Restaurant Support<br>CX Action: Resturant Handled<br>Status: Resolved/Closed (USE THIS)" },
         { case: "DA refused to receive order", type: 'DA refused to receive order', urgency: 'medium', description: "The DA reaches the restaurant but refuses to accept or pick up the assigned order, resulting in potential order cancellation or reassignment.", cx: "-Ask for the order number.<br>-Check it on Yelo.<br>-Create a ticket and call the DA to determine the reason for any issues.<br>-If the DA refuses to deliver, route the case to Live OPS, who will manage the DA or reassign a new DA. (through slack channel now cx-liveops)<br>-If the DA agrees to deliver without delay, no further action is needed.<br>-If a new DA is reassigned (which may cause a delay), send SMS to the customer. (we need to get back to the restautrant to update them with the action that will be taken)", tree: "Internal Request- Resturant Support- DA refused to receive order", treeCx: "Group: CX Restaurant Support<br>CX Action:Handled with DA and Resturant + Customer Informed<br>Status: Resolved/Closed (USE THIS)" },
         { case: "Electricity Issue", type: 'Electricity Issue', urgency: 'urgent', description: "The restaurant is unable to prepare food due to a power outage, impacting order fulfillment.", cx: "-Create a ticket and mark the restaurant as busy. (for now will send on slack bfa-cx-day-savers to ask them to set the restaurant as busy as we don't have access yet)<br>-Coordinate with the restaurant to obtain an ETA for when the issue will be resolved.<br>-Request the restaurant to complete ongoing orders and cancel those not yet started on their behalf.<br>-Create a cancellation ticket with a detailed reason and route it to the outbound team. (In case there is only one order, inbound team will create a cancellation ticket that would be assigned to the OB to call the customer / if there are more than one order, will create one ticket to the outbound team to cancel these orders and create a cancelation ticket for each order)<br>*CX Oubtound Action*<br>-Read the reason, call the customer, and inform them that the order will be canceled.<br>*If the order was paid by -Visa, inform the customer of our authorization and capture payment policy and offer a 200 LE compensation.<br>-Create a \"Wallet Refund\" ticket for the compensation.", tree: "Internal Request- Resturant Support- Electricity Issue", treeCx: "Group: CX Restaurant Support<br>CX Action:Resturant Handled<br>Status: Resolved/Closed (USE THIS)" },
         { case: "Internet Issue", type: 'Internet Issue', urgency: 'medium', description: "The restaurant cannot receive or confirm orders due to internet connectivity problems.", cx: "-Create a ticket and mark the restaurant as busy. (for now will send on slack bfa-cx-day-savers to ask them to set the restaurant as busy as we don't have access yet)<br>-Coordinate with the restaurant to obtain an ETA for when the issue will be resolved. (In case of landline/internet issue and not SIM card issue)<br>-Request the restaurant to complete ongoing orders and cancel those not yet started on their behalf.<br>-Create a cancellation ticket with a detailed reason and route it to the outbound team. (In case there is only one order, inbound team will create a cancellation ticket that would be assigned to the OB to call the customer / if there are more than one order, will create one ticket to the outbound team to cancel these orders and create a cancelation ticket for each order)<br>*CX Oubtound Action*<br>-Read the reason, call the customer, and inform them that the order will be canceled.<br>*If the order was paid by -Visa, inform the customer of our authorization and capture payment policy and offer a 200 LE compensation.<br>-Create a \"Wallet Refund\" ticket for the compensation.", tree: "Internal Request- Resturant Support- Internet Issue", treeCx: "Group: CX Restaurant Support<br>CX Action: Resturant Handled<br>Status: Resolved/Closed (USE THIS)" },
@@ -1623,7 +1626,8 @@
             card.addEventListener('click', () => {
                 const targetSelector = card.dataset.cat ? `.cat[data-cat="${card.dataset.cat}"]` : 
                                        card.dataset.comp ? `.comp[data-comp="${card.dataset.comp}"]` :
-                                       `.proc[data-proc="${card.dataset.proc}"]`;
+                                       card.dataset.proc ? `.proc[data-proc="${card.dataset.proc}"]` :
+                                       `.num[data-num="${card.dataset.num}"]`;
                 const targetElement = document.querySelector(targetSelector);
                 if (targetElement) {
                     targetElement.click();
@@ -1682,13 +1686,32 @@
         viewerTitle.textContent = 'Food Team Knowledge Base';
         viewerTitle.style.textAlign = 'center';
         viewerTitle.style.marginBottom = '0';
-
-        const today = new Date();
-        const lastUpdatedDate = today.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
-
-        lastUpdatedContainer.innerHTML = `<div class="last-updated"><i class="fa-solid fa-calendar-check"></i> Last Updated: <strong>${lastUpdatedDate}</strong></div>`;
+        
+        lastUpdatedContainer.innerHTML = `<div class="last-updated"><i class="fa-solid fa-calendar-check"></i> Last Updated: <strong>${MANUAL_LAST_UPDATED_DATE}</strong></div>`;
 
         const randomTip = allAvailableTips[Math.floor(Math.random() * allAvailableTips.length)];
+        
+        const allPossibleCards = [
+            { label: 'Rider Support', icon: 'fa-solid fa-motorcycle', dataType: 'data-cat', dataValue: 'rider' },
+            { label: 'Restaurant Support', icon: 'fa-solid fa-utensils', dataType: 'data-cat', dataValue: 'restaurant' },
+            { label: 'Product Complaints', icon: 'fa-solid fa-box-open', dataType: 'data-comp', dataValue: 'products' },
+            { label: 'Delivery Complaints', icon: 'fa-solid fa-truck', dataType: 'data-comp', dataValue: 'delivery' },
+            { label: 'Packaging Complaints', icon: 'fa-solid fa-box', dataType: 'data-comp', dataValue: 'packaging' },
+            { label: 'Coffee Complaints', icon: 'fa-solid fa-mug-hot', dataType: 'data-comp', dataValue: 'coffee' },
+            { label: 'Customer Requests', icon: 'fa-solid fa-comment-dots', dataType: 'data-cat', dataValue: 'chat' },
+            { label: 'Compensation', icon: 'fa-solid fa-diagram-project', dataType: 'data-proc', dataValue: 'main_process' },
+            { label: 'Restaurant Numbers', icon: 'fa-solid fa-address-book', dataType: 'data-num', dataValue: 'all_numbers' }
+        ];
+
+        // Shuffle the array and take the first 4
+        const randomCards = allPossibleCards.sort(() => 0.5 - Math.random()).slice(0, 4);
+        
+        const dashboardHTML = randomCards.map(card => `
+            <div class="dashboard-card" ${card.dataType}="${card.dataValue}">
+                <div class="icon"><i class="${card.icon}"></i></div>
+                <h3>${card.label}</h3>
+            </div>
+        `).join('');
 
         viewerContent.innerHTML = `
         <div class="home-viewer-container">
@@ -1697,22 +1720,7 @@
                 <input type="text" id="homeSearchInput" placeholder="Search for any case... (e.g., delay, damaged product, etc.)">
             </div>
             <div class="dashboard">
-                <div class="dashboard-card" data-cat="rider">
-                    <div class="icon"><i class="fa-solid fa-motorcycle"></i></div>
-                    <h3>Rider Support</h3>
-                </div>
-                <div class="dashboard-card" data-comp="products">
-                    <div class="icon"><i class="fa-solid fa-box-open"></i></div>
-                    <h3>Product Complaints</h3>
-                </div>
-                <div class="dashboard-card" data-comp="delivery">
-                    <div class="icon"><i class="fa-solid fa-truck"></i></div>
-                    <h3>Delivery Complaints</h3>
-                </div>
-                <div class="dashboard-card" data-proc="main_process">
-                    <div class="icon"><i class="fa-solid fa-diagram-project"></i></div>
-                    <h3>Compensation</h3>
-                </div>
+                ${dashboardHTML}
             </div>
             <div class="tip-of-the-day">
                 <h4><i class="fa-solid fa-lightbulb"></i> Tip of the Day</h4>
@@ -1823,7 +1831,6 @@
         performSearch(event.target.value.toLowerCase().trim());
     }, 300));
 
-    // --- MODIFIED: Load home page by default ---
     renderHomePage();
 
   </script>
