@@ -337,13 +337,11 @@
     const lastUpdatedContainer = document.getElementById('lastUpdatedContainer');
     const sidebarSearch = document.getElementById('sidebarSearch');
 
-    // ===== START: NEW HELPER FUNCTION TO DETECT ARABIC =====
     function containsArabic(text) {
       if (!text) return false;
       const arabicRegex = /[\u0600-\u06FF]/;
       return arabicRegex.test(text);
     }
-    // ===== END: NEW HELPER FUNCTION =====
 
     const demoCases = {
       updates: [
@@ -1775,6 +1773,12 @@
             return;
         }
 
+        const searchBarHTML = `
+          <div class="viewer-search-bar">
+            <input type="text" id="updatesSearch" placeholder="Search in Updates...">
+          </div>
+        `;
+
         const updatesHTML = updates.map(update => {
             const directionClass = containsArabic(update.description) ? 'rtl-text' : '';
             return `
@@ -1792,7 +1796,19 @@
             `;
         }).join('');
 
-        viewerContent.innerHTML = `<div class="case-list">${updatesHTML}</div>`;
+        viewerContent.innerHTML = searchBarHTML + `<div class="case-list">${updatesHTML}</div>`;
+
+        const searchInput = document.getElementById('updatesSearch');
+        if (searchInput) {
+            const cards = viewerContent.querySelectorAll('.case-list .case-card');
+            searchInput.addEventListener('input', () => {
+                const query = searchInput.value.toLowerCase().trim();
+                cards.forEach(card => {
+                    const cardText = card.textContent.toLowerCase();
+                    card.style.display = cardText.includes(query) ? '' : 'none';
+                });
+            });
+        }
     }
 
     navLinks.forEach(link => {
@@ -1923,3 +1939,5 @@
 
 </body>
 </html>
+}
+ماذا يوجد في اخر تحديث؟
