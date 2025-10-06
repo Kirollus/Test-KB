@@ -1677,8 +1677,7 @@
             if (event.key === 'Enter') {
                 const query = homeSearchInput.value.trim();
                 if (query) {
-                    sidebarSearch.value = query;
-                    sidebarSearch.dispatchEvent(new Event('input', { bubbles: true }));
+                    performGlobalSearch(query);
                 }
             }
         });
@@ -1893,25 +1892,90 @@
         };
     }
 
-    const performSearch = (query) => {
+    function renderSearchResults(results, query) {
+        clearHomePageElements();
+        removeAllActiveClasses();
+        viewerTitle.textContent = `Search Results for "${query}"`;
+        viewerTitle.style.textAlign = 'left';
+
+        if (results.length === 0) {
+            viewerContent.innerHTML = `<p style="text-align:center; color: #555;">No results found.</p>`;
+            return;
+        }
+
+        let contentHTML = '<div class="case-list">';
+
+        results.forEach(item => {
+            if (item.date && item.title && item.description) { // This is an "Update"
+                const directionClass = containsArabic(item.description) ? 'rtl-text' : '';
+                contentHTML += `
+                <div class="case-card" style="margin-bottom: 15px;">
+                    <div class="case-header" style="background-color: #fbe8f3; border-left-color: #c2187b; cursor: default;">
+                        <div class="case-header-title" style="flex-direction: column; align-items: flex-start;">
+                            <span style="font-size: 1.1em; font-weight: bold;">${item.title}</span>
+                            <small style="color: #555; margin-top: 4px;"><i class="fa-solid fa-calendar-alt"></i> ${item.date}</small>
+                        </div>
+                    </div>
+                    <div class="case-body ${directionClass}" style="max-height: 1000px; padding: 15px; line-height: 1.6; display: block;">
+                        ${item.description}
+                    </div>
+                </div>`;
+            } else if (item.case) { // This is a standard "Case"
+                const directionClassDesc = containsArabic(item.description) ? 'rtl-text' : '';
+                contentHTML += `
+                <div class="case-card">
+                  <div class="case-header urgency-${(item.urgency || 'normal').toLowerCase()}">
+                    <div class="case-header-title">
+                      <span>${item.case}</span>
+                      ${item.type ? `<span class="case-tag type-${(item.type || '').replace(/ /g, '-').toLowerCase()}">${item.type}</span>` : ''}
+                    </div>
+                    <span class="arrow">▶</span>
+                  </div>
+                  <div class="case-body">
+                    <div class="dropdown"><div class="dropdown-header">ℹ️ Description <span class="dropdown-arrow">▶</span></div><div class="dropdown-body ${directionClassDesc}">${item.description||"No description"}</div></div>
+                    <div class="dropdown"><div class="dropdown-header">🛠️ CX Agent Action Steps <span class="dropdown-arrow">▶</span></div><div class="dropdown-body">${item.cx||"No action"}</div></div>
+                    <div class="dropdown"><div class="dropdown-header">🌳 Tree <span class="dropdown-arrow">▶</span></div><div class="dropdown-body">${item.tree||"No tree data"}</div></div>
+                    <div class="dropdown"><div class="dropdown-header">⬆️ CX Actions <span class="dropdown-arrow">▶</span></div><div class="dropdown-body">${item.treeCx||"No tree CX action"}</div></div>
+                  </div>
+                </div>`;
+            }
+        });
+
+        contentHTML += '</div>';
+        viewerContent.innerHTML = contentHTML;
+        attachCaseEventListeners();
+    }
+
+    const performGlobalSearch = (query) => {
         if (query.length < 2) {
-            if (!document.querySelector('.nav-link[data-page="home"]').classList.contains('active')) {
-                renderHomePage();
+            const activeNav = document.querySelector('.nav-link.active');
+            if (!activeNav || !activeNav.dataset.page === 'home') {
+               renderHomePage();
             }
             return;
         }
-        removeAllActiveClasses();
-        let results = [];
-        const allCaseArrays = Object.values(demoCases).flat();
-        results = allCaseArrays.filter(caseItem => {
-            if(caseItem.content) return false;
-            return JSON.stringify(caseItem).toLowerCase().includes(query);
-        });
-        renderCases(results, `Search Results for "${query}"`, 'case');
+
+        let allResults = [];
+        const lowerCaseQuery = query.toLowerCase();
+
+        for (const key in demoCases) {
+            if (demoCases.hasOwnProperty(key)) {
+                const items = demoCases[key];
+                const filteredItems = items.filter(item => {
+                    return JSON.stringify(item).toLowerCase().includes(lowerCaseQuery);
+                });
+                allResults = allResults.concat(filteredItems);
+            }
+        }
+
+        const uniqueResults = Array.from(new Set(allResults.map(a => a.case || a.title)))
+                                 .map(id => allResults.find(a => (a.case || a.title) === id));
+
+        renderSearchResults(uniqueResults, query);
     };
 
     sidebarSearch.addEventListener('input', debounce((event) => {
-        performSearch(event.target.value.toLowerCase().trim());
+        performGlobalSearch(event.target.value.trim());
     }, 300));
 
     renderHomePage();
