@@ -1027,7 +1027,7 @@
           type: 'Out of zone',
           urgency: 'medium',
           description: "The customer’s delivery address is outside the DA’s serviceable delivery zone, causing delays or potential cancellation.",
-          cx: "1. The CX agent will check the order ID and create a ticket.<br>2. They will first attempt to handle the DA and request delivery as an exception.<br>3. The agent will then call the customer to inform them that their current address is out of zone but will be delivered today as a one-time exception.<br>4. If the DA refuses to deliver, we will cancel the order, choose the reason on Yelo (e.g., Fake Customer) and then inform the customer.",
+          cx: "1. The CX agent will check the order ID and create a ticket.<br>2. They will first attempt to handle the DA and request delivery as an exception.<br>3. The agent will then call the customer ( 2 trials within 2 minutes ) to inform them that their current address is out of zone but will be delivered today as a one-time exception.<br>4. If the DA refuses to deliver, we will cancel the order, choose the reason on Yelo (e.g., Fake Customer) and then inform the customer.",
           tree: "Internal Request- Riders Support- Out of Zone Address",
           treeCx: "• Group: CX Riders Support<br>• CX Action:<br>- Order Canceled (in case DA refused to deliver).<br>- Customer informed (in case DA agreed to deliver).<br>• Status: Resolved/Closed (USE THIS)"
         },
@@ -1045,7 +1045,7 @@
 		  type: 'Order Package Messy',
 		  urgency: 'medium',
 		  description: "The DA refuses to receive the order upon delivery due to messy packaging eg, spilled sauce or items on the bag or the order packaging is not properly sealed or is messy when handed to the DA, potentially causing food spillage.",
-		  cx: "•Ask for the order number.<br>•Check it on Yelo.<br>•Report the ticket on freshdesk and add a note in the ticket with full details.<br>•Identify the issue with the packaging.<br>•Call the restaurant and attempt to resolve the situation to prevent a negative customer experience.<br>•If the restaurant refuses to cooperate, route the case to the Account Managers for escalation.",
+		  cx: "•Ask for the order number.<br>•Check it on Yelo.<br>•Report the ticket on freshdesk and add a note in the ticket with full details.<br>•Identify the issue with the packaging.<br>•Call the restaurant (1 Trial) and attempt to resolve the situation to prevent a negative customer experience.<br>•If the restaurant refuses to cooperate, route the case to the Account Managers for escalation.",
 		  tree: "Internal Request- Riders Support- Order Package Messy",
 		  treeCx: "• Group: CX Riders Support<br>• CX Action:<br>- Restaurant Handled (In case restauarant cooperated) <br>- No Action (in case restaurant refused)<br>• Status: Resolved/Closed (USE THIS)"
 		},
@@ -1054,7 +1054,7 @@
           type: 'Customer Refuses to Receive',
           urgency: 'urgent',
           description: "The customer refuses to accept the order upon delivery due to dissatisfaction, wrong items, or other reasons.",
-          cx: "•Ask for the order number.<br>•Check it on Yelo.<br>•The CX agent will check the order ID and create a ticket. They will call the customer to understand the reason for not receiving the order and attempt to handle the situation.<br>•If the customer insists on cancellation, the agent will proceed with cancellation, record or select the cancellation reason in Yelo, and inform the DA of the cancellation.<br>",
+          cx: "•Ask for the order number.<br>•Check it on Yelo.<br>•The CX agent will check the order ID and create a ticket. They will call the customer to understand the reason for not receiving the order and attempt to handle the situation. ( 2 trials within 2 minutes )<br>•If the customer insists on cancellation, the agent will proceed with cancellation, record or select the cancellation reason in Yelo, and inform the DA of the cancellation.<br>",
           tree: "Internal Request- Riders Support- Customer Refuses to Receive",
           treeCx: "• Group: CX Riders Support<br>• CX Action: DA Handled<br>• Status: Resolved/Closed (USE THIS)"
         },
@@ -1063,7 +1063,7 @@
           type: 'Close By 0',
           urgency: 'medium',
           description: "The customer declines to pay for the order in Cash-on-Delivery (COD) cases, leaving the DA unable to complete the handover.",
-          cx: "•Ask for the order number.<br>•Check it on Yelo.<br>•Report the ticket on freshdesk and add a note in the ticket with full details.<br>•Call the customer to understand why the order value hasn't been paid and explain the policy that a negative amount will be added to their account, potentially preventing future orders until the balance is settled using the top-up feature.<br>•If the customer agrees, Inform the DA to leave and apply the negative amount to the customer's account.<br>•Document the collected amount by the DA versus the actual amount for Karam to settle later.<br>•Route the ticket to the Live OPS team after confirming with both the customer and rider. (We post on cx liveops channel on slack for now)<br>•If the customer requests a cancellation instead, proceed with the cancellation, record or select the cancellation reason in Yelo, and inform the DA of the cancellation.",
+          cx: "•Ask for the order number.<br>•Check it on Yelo.<br>•Report the ticket on freshdesk and add a note in the ticket with full details.<br>•Call the customer ( 2 trials within 2 minutes ) to understand why the order value hasn't been paid and explain the policy that a negative amount will be added to their account, potentially preventing future orders until the balance is settled using the top-up feature.<br>•If the customer agrees, Inform the DA to leave and apply the negative amount to the customer's account.<br>•Document the collected amount by the DA versus the actual amount for Karam to settle later.<br>•Route the ticket to the Live OPS team after confirming with both the customer and rider. (We post on cx liveops channel on slack for now)<br>•If the customer requests a cancellation instead, proceed with the cancellation, record or select the cancellation reason in Yelo, and inform the DA of the cancellation.",
           tree: "Internal Request- Riders Support- Customer challnages with payment ",
           treeCx: "• Group: CX Riders Support<br>• CX Action:<br>- DA Handled (in case negative balance will be added).<br>- Order canceled (in case order will be canceled)<br>• Status: Resolved/Closed (USE THIS)"
         },
@@ -1072,7 +1072,7 @@
           type: 'Customer Inappropriate Attitude',
           urgency: 'urgent',
           description: "The DA reports the customer’s unprofessional, abusive, or disrespectful behavior during delivery.",
-          cx: "•Ask for the order number.<br>•Check it on Yelo.<br>•Report the ticket on freshdesk and add a note in the ticket with full details.<br>•Apologize to the DA and attempt to handle the situation by asking the DA to deliver the order.<br>•Call the customer to understand what is the issue and take the necessary action. (if the DA is not handled we need to report to liveops through slack channel cx-liveops for now)",
+          cx: "•Ask for the order number.<br>•Check it on Yelo.<br>•Report the ticket on freshdesk and add a note in the ticket with full details.<br>•Apologize to the DA and attempt to handle the situation by asking the DA to deliver the order.<br>•Call the customer to understand what is the issue ( 2 trials within 2 minutes ) and take the necessary action. (if the DA is not handled we need to report to liveops through slack channel cx-liveops for now)",
           tree: "Internal Request- Riders Support- Customer Inappropriate Attitude",
           treeCx: "• Group: CX Riders Support<br>• CX Action: DA Handled<br>• Status: Resolved/Closed (USE THIS)"
         },
@@ -1090,7 +1090,7 @@
           type: 'Customer Requests Cancellation While En Route',
           urgency: 'urgent',
           description: "The customer asks to cancel the order after the DA has already picked it up and is on the way.",
-          cx: "•Ask for the order number.<br>•Check it on Yelo.<br>•Report the ticket on freshdesk and add a note in the ticket with full details.<br>•Call the customer to understand the reason for the cancellation and try to resolve the situation.<br>•If the customer insists on canceling, proceed with the cancellation,select the cancellation reason in Yelo, and inform the DA to move <br>(If the case is routed from the catting team, should be assigned to the outbound team)",
+          cx: "•Ask for the order number.<br>•Check it on Yelo.<br>•Report the ticket on freshdesk and add a note in the ticket with full details.<br>•Call the customer to understand the reason for the cancellation and try to resolve the situation. ( 2 trials within 2 minutes )<br>•If the customer insists on canceling, proceed with the cancellation,select the cancellation reason in Yelo, and inform the DA to move <br>(If the case is routed from the catting team, should be assigned to the outbound team)",
           tree: "Internal Request- Riders Support- Customer Requests Cancellation While En Route",
           treeCx: "• Group: CX Riders Support<br>• CX Action:<br>- Order Canceled (in case customer insists on canceling).<br>- No action (in case order will be delivered normally)<br>• Status: Resolved/Closed (USE THIS)"
         },
